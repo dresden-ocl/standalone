@@ -6,8 +6,8 @@
 	<classpathentry kind="lib" path="lib/org.apache.log4j_1.2.13.v200903072027.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.runtime_3.5.0.v20090525.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.emf.common_2.5.0.v200906151043.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore_2.5.0.v200906151043.jar" sourcepath="/Users/mt/Desktop/eclipse3.5OCL2/plugins/org.eclipse.emf.ecore.source_2.5.0.v200906151043.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.5.0.v200906151043.jar" sourcepath="/Users/mt/Desktop/eclipse3.5OCL2/plugins/org.eclipse.emf.ecore.xmi.source_2.5.0.v200906151043.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore_2.5.0.v200906151043.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.5.0.v200906151043.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.emf.mapping.ecore2xml_2.5.0.v200906151043.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.equinox.common_3.5.1.R35x_v20090807-1100.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.osgi_3.5.2.R35x_v20100126.jar"/>
