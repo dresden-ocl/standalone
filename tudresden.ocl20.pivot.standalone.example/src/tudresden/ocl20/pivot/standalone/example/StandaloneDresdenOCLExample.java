@@ -29,6 +29,15 @@ public class StandaloneDresdenOCLExample {
 	final static File pmlOclConstraints =
 			new File("resources/constraints/pml_wfrs.ocl");
 
+	final static File simpleModel =
+			new File(
+					"resources/model/tudresden/ocl20/pivot/examples/simple/ModelProviderClass.class");
+	final static File simpleInstance =
+			new File(
+					"resources/modelinstance/tudresden/ocl20/pivot/examples/simple/instance/ModelInstanceProviderClass.class");
+	final static File simpleOclConstraints =
+			new File("resources/constraints/simple_allConstraints.ocl");
+
 	public static void main(String[] args) throws Exception {
 
 		StandaloneFacade.INSTANCE.initialize(new URL("file:"
@@ -100,6 +109,36 @@ public class StandaloneDresdenOCLExample {
 						+ result.getResult());
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/*
+		 * Simple
+		 */
+		System.out.println();
+		System.out.println("Simple Example");
+		System.out.println("--------------");
+		System.out.println();
+
+		try {
+			IModel model = StandaloneFacade.INSTANCE.loadJavaModel(simpleModel);
+
+			IModelInstance modelInstance =
+					StandaloneFacade.INSTANCE
+							.loadJavaModelInstance(model, simpleInstance);
+
+			List<Constraint> constraintList =
+					StandaloneFacade.INSTANCE.parseOclConstraints(model,
+							simpleOclConstraints);
+
+			for (IInterpretationResult result : StandaloneFacade.INSTANCE
+					.interpretEverything(modelInstance, constraintList)) {
+				System.out.println("  " + result.getModelObject() + " ("
+						+ result.getConstraint().getKind() + ": "
+						+ result.getConstraint().getSpecification().getBody() + "): "
+						+ result.getResult());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
