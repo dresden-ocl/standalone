@@ -8,9 +8,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import tudresden.ocl20.pivot.examples.pml.PmlPackage;
+import tudresden.ocl20.pivot.examples.simple.Person;
+import tudresden.ocl20.pivot.examples.simple.Professor;
+import tudresden.ocl20.pivot.examples.simple.Student;
 import tudresden.ocl20.pivot.interpreter.IInterpretationResult;
 import tudresden.ocl20.pivot.modelbus.model.IModel;
 import tudresden.ocl20.pivot.modelbus.modelinstance.IModelInstance;
+import tudresden.ocl20.pivot.modelinstancetype.java.internal.modelinstance.JavaModelInstance;
 import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
 import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
@@ -142,9 +146,19 @@ public class StandaloneDresdenOCLExample {
 		try {
 			IModel model = StandaloneFacade.INSTANCE.loadJavaModel(simpleModel);
 
-			IModelInstance modelInstance =
-					StandaloneFacade.INSTANCE
-							.loadJavaModelInstance(model, simpleInstance);
+			// create an empty model instance and put objects into it
+			IModelInstance modelInstance = new JavaModelInstance(model);
+			
+			Person student = new Student();
+			student.setName("Student-work-a-lot");
+			student.setAge(23);
+			
+			Person prof = new Professor();
+			prof.setName("Prof. Invalid");
+			prof.setAge(-42);
+			
+			modelInstance.addModelInstanceElement(student);
+			modelInstance.addModelInstanceElement(prof);
 
 			List<Constraint> constraintList =
 					StandaloneFacade.INSTANCE.parseOclConstraints(model,
