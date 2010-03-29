@@ -39,6 +39,7 @@ import tudresden.ocl20.pivot.ocl2parser.parser.Ocl2Parser;
 import tudresden.ocl20.pivot.parser.ParseException;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
 import tudresden.ocl20.pivot.standalone.metamodel.EcoreMetamodel;
+import tudresden.ocl20.pivot.standalone.metamodel.JavaMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.UMLMetamodel;
 
 /**
@@ -205,6 +206,28 @@ public class StandaloneFacade {
 		standaloneMetamodelRegistry.addMetamodel(ecoreMetamodel);
 
 		IModel model = ecoreMetamodel.getModelProvider().getModel(modelFile);
+
+		return model;
+	}
+
+	/**
+	 * Loads a Java model from a given .class file.
+	 * 
+	 * @param classFile
+	 *          the .class file
+	 * @return an adapted Java model that can be used for parsing OCL constraints
+	 *         and loading model instances
+	 * @throws ModelAccessException
+	 *           if something went wrong while loading the Java model
+	 */
+	public IModel loadJavaModel(File classFile) throws ModelAccessException {
+
+		checkInitialized();
+
+		IMetamodel javaMetamodel = new JavaMetamodel();
+		standaloneMetamodelRegistry.addMetamodel(javaMetamodel);
+
+		IModel model = javaMetamodel.getModelProvider().getModel(classFile);
 
 		return model;
 	}

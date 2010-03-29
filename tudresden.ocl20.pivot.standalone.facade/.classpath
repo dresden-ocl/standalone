@@ -31,5 +31,6 @@
 	<classpathentry exported="true" kind="lib" path="plugins/tudresden.ocl20.pivot.parser_2.1.0.201003101751.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugins/tudresden.ocl20.pivot.pivotmodel_2.1.0.201003101751.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugins/tudresden.ocl20.pivot.standardlibrary.java_2.1.0.201003101751.jar"/>
+	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.metamodels.java_2.1.0.201003101751.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
