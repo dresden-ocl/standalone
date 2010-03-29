@@ -11,6 +11,8 @@ import tudresden.ocl20.pivot.examples.pml.PmlPackage;
 import tudresden.ocl20.pivot.interpreter.IInterpretationResult;
 import tudresden.ocl20.pivot.modelbus.model.IModel;
 import tudresden.ocl20.pivot.modelbus.modelinstance.IModelInstance;
+import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
+import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
 import tudresden.ocl20.pivot.standalone.facade.StandaloneFacade;
 
@@ -43,6 +45,7 @@ public class StandaloneDresdenOCLExample {
 		StandaloneFacade.INSTANCE.initialize(new URL("file:"
 				+ new File("log4j.properties").getAbsolutePath()));
 
+		
 		/*
 		 * Royals & Loyals
 		 */
@@ -77,10 +80,24 @@ public class StandaloneDresdenOCLExample {
 
 			System.out.println("time for interpretation: " + (end - start));
 
+			
+			/*
+			 * Royals & Loyals - Code generation
+			 */
+			System.out.println();
+			System.out.println("Royals & Loyals - Code generation");
+			System.out.println("---------------------------------");
+			System.out.println();
+
+			IOcl22CodeSettings settings = Ocl22JavaFactory.getInstance().createJavaCodeGeneratorSettings();
+			settings.setSourceDirectory("src-gen/");
+			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList, settings);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		
 		/*
 		 * PML
 		 */
@@ -113,6 +130,7 @@ public class StandaloneDresdenOCLExample {
 			e.printStackTrace();
 		}
 
+		
 		/*
 		 * Simple
 		 */
@@ -142,5 +160,6 @@ public class StandaloneDresdenOCLExample {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 }

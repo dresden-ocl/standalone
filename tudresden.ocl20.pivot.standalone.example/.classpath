@@ -33,5 +33,8 @@
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.pivotmodel_2.1.0.201003101751.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.examples.simple_2.1.0.201003101751.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.metamodels.java_2.1.0.201003101751.jar"/>
+	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.ocl2java_2.1.0.201003101751.jar"/>
+	<classpathentry kind="lib" path="lib/antlr.jar"/>
+	<classpathentry kind="lib" path="lib/stringtemplate.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
