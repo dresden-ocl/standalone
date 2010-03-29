@@ -35,6 +35,10 @@ import tudresden.ocl20.pivot.modelbus.modelinstance.IModelInstanceProvider;
 import tudresden.ocl20.pivot.modelbus.modelinstance.types.IModelInstanceObject;
 import tudresden.ocl20.pivot.modelinstancetype.ecore.internal.provider.EcoreModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.provider.JavaModelInstanceProvider;
+import tudresden.ocl20.pivot.ocl2java.IOcl22Code;
+import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
+import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
+import tudresden.ocl20.pivot.ocl2java.exception.Ocl22CodeException;
 import tudresden.ocl20.pivot.ocl2parser.parser.Ocl2Parser;
 import tudresden.ocl20.pivot.parser.ParseException;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
@@ -86,6 +90,8 @@ public class StandaloneFacade {
 
 	private IModelInstanceProvider javaModelInstanceProvider;
 	private IModelInstanceProvider ecoreModelInstanceProvider;
+
+	private IOcl22Code javaCodeGenerator;
 
 	/**
 	 * Returns the single instance of the {@link StandaloneFacade}.
@@ -332,6 +338,43 @@ public class StandaloneFacade {
 		}
 
 		return resultList;
+	}
+
+	/**
+	 * Generates AspectJ code for the given constraints.
+	 * 
+	 * @param constraints
+	 *          the constraints for which AspectJ code should be created
+	 * @param settings
+	 *          the {@link IOcl22CodeSettings} containing at least a directory
+	 *          into which the code should be generated
+	 * @throws Ocl22CodeException
+	 *           if the {@link IOcl22CodeSettings} were not set properly or
+	 *           something went wrong during code generation
+	 */
+	public void generateAspectJCode(List<Constraint> constraints,
+			IOcl22CodeSettings settings) throws Ocl22CodeException {
+
+		if (settings == null)
+			throw new Ocl22CodeException("The IOcl22CodeSettings cannot be null.");
+
+		if (settings.getSourceDirectory() == null)
+			throw new Ocl22CodeException(
+					"The directory for code generation cannot be null. Set the value in the IOcl22CodeSettings.");
+
+		settings.setSaveCode(true);
+
+		if (javaCodeGenerator == null) {
+			javaCodeGenerator =
+					Ocl22JavaFactory.getInstance().createJavaCodeGenerator();
+		}
+		// no else.
+
+		javaCodeGenerator.resetEnvironment();
+		javaCodeGenerator.setSettings(settings);
+		javaCodeGenerator.transformInstrumentationCode(constraints);
+
+		settings.setSaveCode(false);
 	}
 
 	private void initInterpreterPlugin() {
