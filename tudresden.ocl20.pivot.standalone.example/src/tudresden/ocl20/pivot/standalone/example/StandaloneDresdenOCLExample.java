@@ -12,8 +12,8 @@ import tudresden.ocl20.pivot.examples.simple.Person;
 import tudresden.ocl20.pivot.examples.simple.Professor;
 import tudresden.ocl20.pivot.examples.simple.Student;
 import tudresden.ocl20.pivot.interpreter.IInterpretationResult;
-import tudresden.ocl20.pivot.modelbus.model.IModel;
-import tudresden.ocl20.pivot.modelbus.modelinstance.IModelInstance;
+import tudresden.ocl20.pivot.model.IModel;
+import tudresden.ocl20.pivot.modelinstance.IModelInstance;
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.modelinstance.JavaModelInstance;
 import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
 import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
@@ -48,42 +48,51 @@ public class StandaloneDresdenOCLExample {
 
 		StandaloneFacade.INSTANCE.initialize(new URL("file:"
 				+ new File("log4j.properties").getAbsolutePath()));
-
 		
+		royalsAndLoyals();
+
+		pml();
+
+		simple();
+		
+	}
+
+	private static void royalsAndLoyals() {
+	
 		/*
 		 * Royals & Loyals
 		 */
 		System.out.println("Royals and Loyals");
 		System.out.println("-----------------");
 		System.out.println();
-
+	
 		try {
 			IModel model =
 					StandaloneFacade.INSTANCE.loadUMLModel(rlModel, new File(
 							"lib/org.eclipse.uml2.uml.resources_3.0.0.v200906011111.jar"));
-
+	
 			IModelInstance modelInstance =
 					StandaloneFacade.INSTANCE.loadJavaModelInstance(model, rlInstance);
-
+	
 			List<Constraint> constraintList =
 					StandaloneFacade.INSTANCE
 							.parseOclConstraints(model, rlOclConstraints);
-
+	
 			long start = System.currentTimeMillis();
-
+	
 			List<IInterpretationResult> results =
 					StandaloneFacade.INSTANCE.interpretEverything(modelInstance,
 							constraintList);
-
+	
 			long end = System.currentTimeMillis();
-
+	
 			for (IInterpretationResult result : results) {
 				System.out.println("  " + result.getModelObject() + ": "
 						+ result.getResult());
 			}
-
+	
 			System.out.println("time for interpretation: " + (end - start));
-
+	
 			
 			/*
 			 * Royals & Loyals - Code generation
@@ -92,16 +101,20 @@ public class StandaloneDresdenOCLExample {
 			System.out.println("Royals & Loyals - Code generation");
 			System.out.println("---------------------------------");
 			System.out.println();
-
+	
 			IOcl22CodeSettings settings = Ocl22JavaFactory.getInstance().createJavaCodeGeneratorSettings();
 			settings.setSourceDirectory("src-gen/");
 			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList, settings);
 			
+			System.out.println("Finished code generation.");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
-		
+	private static void pml() {
+	
 		/*
 		 * PML
 		 */
@@ -109,32 +122,34 @@ public class StandaloneDresdenOCLExample {
 		System.out.println("Plug-in Modeling Language (PML)");
 		System.out.println("-------------------------------");
 		System.out.println();
-
+	
 		try {
 			IModel model = StandaloneFacade.INSTANCE.loadEcoreModel(pmlModel);
-
+	
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("pml",
 					new XMIResourceFactoryImpl());
 			PmlPackage.eINSTANCE.eClass();
-
+	
 			IModelInstance modelInstance =
 					StandaloneFacade.INSTANCE.loadEcoreModelInstance(model, pmlInstance);
-
+	
 			List<Constraint> constraintList =
 					StandaloneFacade.INSTANCE.parseOclConstraints(model,
 							pmlOclConstraints);
-
+	
 			for (IInterpretationResult result : StandaloneFacade.INSTANCE
 					.interpretEverything(modelInstance, constraintList)) {
 				System.out.println("  " + result.getModelObject() + ": "
 						+ result.getResult());
 			}
-
+	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
-		
+	private static void simple() {
+
 		/*
 		 * Simple
 		 */
@@ -174,6 +189,5 @@ public class StandaloneDresdenOCLExample {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

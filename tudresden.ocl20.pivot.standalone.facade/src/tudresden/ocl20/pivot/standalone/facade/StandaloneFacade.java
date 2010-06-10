@@ -1,5 +1,7 @@
 package tudresden.ocl20.pivot.standalone.facade;
 
+// FIXME MIchael: XML example
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,22 +21,21 @@ import org.eclipse.uml2.uml.internal.resource.UMLResourceFactoryImpl;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import tudresden.ocl20.logging.LoggingPlugin;
+import tudresden.ocl20.pivot.essentialocl.EssentialOclPlugin;
+import tudresden.ocl20.pivot.essentialocl.standardlibrary.provider.StandaloneOclLibraryProvider;
 import tudresden.ocl20.pivot.interpreter.IInterpretationResult;
 import tudresden.ocl20.pivot.interpreter.IOclInterpreter;
 import tudresden.ocl20.pivot.interpreter.OclInterpreterPlugin;
 import tudresden.ocl20.pivot.interpreter.internal.OclInterpreter;
-import tudresden.ocl20.pivot.modelbus.ModelAccessException;
-import tudresden.ocl20.pivot.modelbus.ModelBusPlugin;
-import tudresden.ocl20.pivot.modelbus.internal.StandaloneOclLibraryProvider;
-import tudresden.ocl20.pivot.modelbus.metamodel.IMetamodel;
-import tudresden.ocl20.pivot.modelbus.metamodel.IMetamodelRegistry;
-import tudresden.ocl20.pivot.modelbus.metamodel.internal.StandaloneMetamodelRegistry;
-import tudresden.ocl20.pivot.modelbus.model.IModel;
-import tudresden.ocl20.pivot.modelbus.modelinstance.IModelInstance;
-import tudresden.ocl20.pivot.modelbus.modelinstance.IModelInstanceProvider;
-import tudresden.ocl20.pivot.modelbus.modelinstance.types.IModelInstanceObject;
+import tudresden.ocl20.pivot.model.IModel;
+import tudresden.ocl20.pivot.model.ModelAccessException;
+import tudresden.ocl20.pivot.model.metamodel.IMetamodel;
+import tudresden.ocl20.pivot.model.metamodel.IMetamodelRegistry;
+import tudresden.ocl20.pivot.modelinstance.IModelInstance;
+import tudresden.ocl20.pivot.modelinstance.IModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.ecore.internal.provider.EcoreModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.provider.JavaModelInstanceProvider;
+import tudresden.ocl20.pivot.modelinstancetype.types.IModelInstanceObject;
 import tudresden.ocl20.pivot.ocl2java.IOcl22Code;
 import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
 import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
@@ -42,9 +43,11 @@ import tudresden.ocl20.pivot.ocl2java.exception.Ocl22CodeException;
 import tudresden.ocl20.pivot.ocl2parser.parser.Ocl2Parser;
 import tudresden.ocl20.pivot.parser.ParseException;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
+import tudresden.ocl20.pivot.standalone.codegeneration.StandaloneTemplateEngineRegistry;
 import tudresden.ocl20.pivot.standalone.metamodel.EcoreMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.JavaMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.UMLMetamodel;
+import tudresden.ocl20.pivot.tools.template.TemplatePlugin;
 
 /**
  * <p>
@@ -133,15 +136,24 @@ public class StandaloneFacade {
 			 * Eclipse to instantiate them.
 			 */
 			new LoggingPlugin(loggerPropertiesUrl);
-			new ModelBusPlugin();
+			new EssentialOclPlugin();
+			new TemplatePlugin();
 
-			ModelBusPlugin.setMetamodelRegistry(standaloneMetamodelRegistry);
-			ModelBusPlugin.setOclLibraryProvider(new StandaloneOclLibraryProvider(
-					StandaloneFacade.class
-							.getResourceAsStream("/oclstandardlibrary.types")));
+			EssentialOclPlugin
+					.setOclLibraryProvider(new StandaloneOclLibraryProvider(
+							StandaloneFacade.class
+									.getResourceAsStream("/oclstandardlibrary.types")));
+
+			TemplatePlugin
+					.setTempateEngineRegistry(new StandaloneTemplateEngineRegistry());
 
 			initialized = true;
 		}
+	}
+
+	public IMetamodelRegistry getStandaloneMetamodelRegistry() {
+
+		return standaloneMetamodelRegistry;
 	}
 
 	/**

@@ -1,13 +1,13 @@
 package tudresden.ocl20.pivot.standalone.metamodel;
 
 import tudresden.ocl20.pivot.metamodels.ecore.EcoreMetamodelPlugin;
-import tudresden.ocl20.pivot.metamodels.ecore.internal.provider.EcoreModelProvider;
-import tudresden.ocl20.pivot.modelbus.metamodel.IMetamodel;
-import tudresden.ocl20.pivot.modelbus.model.IModelProvider;
+import tudresden.ocl20.pivot.model.IModelProvider;
+import tudresden.ocl20.pivot.model.metamodel.IMetamodel;
+import tudresden.ocl20.pivot.standalone.model.StandaloneEcoreModelProvider;
 
 public class EcoreMetamodel implements IMetamodel {
 
-	private IModelProvider modelProvider = new EcoreModelProvider();
+	private IModelProvider modelProvider = new StandaloneEcoreModelProvider();
 
 	/*
 	 * (non-Javadoc)

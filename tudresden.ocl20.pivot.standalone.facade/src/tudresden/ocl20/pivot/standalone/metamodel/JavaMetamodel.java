@@ -1,13 +1,13 @@
 package tudresden.ocl20.pivot.standalone.metamodel;
 
 import tudresden.ocl20.pivot.metamodels.java.JavaMetaModelPlugin;
-import tudresden.ocl20.pivot.metamodels.java.internal.provider.JavaModelProvider;
-import tudresden.ocl20.pivot.modelbus.metamodel.IMetamodel;
-import tudresden.ocl20.pivot.modelbus.model.IModelProvider;
+import tudresden.ocl20.pivot.model.IModelProvider;
+import tudresden.ocl20.pivot.model.metamodel.IMetamodel;
+import tudresden.ocl20.pivot.standalone.model.StandaloneJavaModelProvider;
 
 public class JavaMetamodel implements IMetamodel {
 
-	private IModelProvider javaModelProvider = new JavaModelProvider();
+	private IModelProvider javaModelProvider = new StandaloneJavaModelProvider();
 
 	public String getId() {
 
