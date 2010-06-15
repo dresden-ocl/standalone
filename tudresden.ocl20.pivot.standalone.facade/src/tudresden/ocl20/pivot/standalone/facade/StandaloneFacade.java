@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.internal.resource.UMLResourceFactoryImpl;
 import org.eclipse.uml2.uml.resource.UMLResource;
@@ -36,6 +37,7 @@ import tudresden.ocl20.pivot.modelinstance.IModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.ecore.internal.provider.EcoreModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.provider.JavaModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.types.IModelInstanceObject;
+import tudresden.ocl20.pivot.modelinstancetype.xml.internal.provider.XmlModelInstanceProvider;
 import tudresden.ocl20.pivot.ocl2java.IOcl22Code;
 import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
 import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
@@ -47,6 +49,7 @@ import tudresden.ocl20.pivot.standalone.codegeneration.StandaloneTemplateEngineR
 import tudresden.ocl20.pivot.standalone.metamodel.EcoreMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.JavaMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.UMLMetamodel;
+import tudresden.ocl20.pivot.standalone.metamodel.XSDMetamodel;
 import tudresden.ocl20.pivot.tools.template.TemplatePlugin;
 
 /**
@@ -93,6 +96,7 @@ public class StandaloneFacade {
 
 	private IModelInstanceProvider javaModelInstanceProvider;
 	private IModelInstanceProvider ecoreModelInstanceProvider;
+	private IModelInstanceProvider xmlModelInstanceProvider;
 
 	private IOcl22Code javaCodeGenerator;
 
@@ -251,6 +255,31 @@ public class StandaloneFacade {
 	}
 
 	/**
+	 * Loads an XSD file.
+	 * 
+	 * @param xsdFile
+	 *          an .xsd file
+	 * @return the adapted XSD model that can be used for parsing OCL constraints
+	 *         and loading model instances
+	 * @throws ModelAccessException
+	 *           if something went wrong while loading the XSD model
+	 */
+	public IModel loadXSDModel(File xsdFile) throws ModelAccessException {
+
+		checkInitialized();
+
+		/* This is needed as the XSD adapter internally uses Ecore. */
+		registerEcoreMetamodel();
+
+		IMetamodel xsdMetamodel = new XSDMetamodel();
+		standaloneMetamodelRegistry.addMetamodel(xsdMetamodel);
+
+		IModel model = xsdMetamodel.getModelProvider().getModel(xsdFile);
+
+		return model;
+	}
+
+	/**
 	 * Parses the OCL constraints in a given file and returns a list of
 	 * {@link Constraint}s that can be used for interpretation.
 	 * 
@@ -315,6 +344,28 @@ public class StandaloneFacade {
 
 		IModelInstance modelInstance =
 				ecoreModelInstanceProvider.getModelInstance(modelInstanceFile, model);
+
+		return modelInstance;
+	}
+
+	/**
+	 * Loads an XML model instance for a given model.
+	 * 
+	 * @param model
+	 *          the model for the model instance
+	 * @param modelInstanceFile
+	 *          an .xml file
+	 * @return the adapted XML model instance that can be used for interpretation
+	 * @throws ModelAccessException
+	 *           if something went wrong during loading the model instance
+	 */
+	public IModelInstance loadXMLModelInstance(IModel model,
+			File modelInstanceFile) throws ModelAccessException {
+
+		initXMLModelInstanceProvider();
+
+		IModelInstance modelInstance =
+				xmlModelInstanceProvider.getModelInstance(modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -420,6 +471,14 @@ public class StandaloneFacade {
 
 	}
 
+	private void initXMLModelInstanceProvider() {
+
+		checkInitialized();
+
+		if (xmlModelInstanceProvider == null)
+			xmlModelInstanceProvider = new XmlModelInstanceProvider();
+	}
+
 	private void registerEcoreMetamodel() {
 
 		if (!registeredEcoreMetamodel)
@@ -427,6 +486,8 @@ public class StandaloneFacade {
 					EcorePackage.eINSTANCE);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore",
 				new EcoreResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*",
+				new XMIResourceFactoryImpl());
 
 		registeredEcoreMetamodel = true;
 	}

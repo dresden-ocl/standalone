@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.standalone.facade_2.2.0.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.standardlibrary.java_2.2.0.201003101751.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.template_2.2.0.201003101751.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.xsd_2.5.0.v200906151043.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

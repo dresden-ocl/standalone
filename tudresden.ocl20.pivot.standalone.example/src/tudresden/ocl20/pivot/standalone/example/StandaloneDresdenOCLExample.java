@@ -44,56 +44,64 @@ public class StandaloneDresdenOCLExample {
 	final static File simpleOclConstraints =
 			new File("resources/constraints/simple_allConstraints.ocl");
 
+	final static File painModel =
+			new File("resources/model/pain.008.001.01corrected.xsd");
+	final static File painInstance =
+			new File("resources/modelinstance/BusEx1.xml");
+	final static File painOclConstraints =
+			new File("resources/constraints/pain_wfrs.ocl");
+
 	public static void main(String[] args) throws Exception {
 
 		StandaloneFacade.INSTANCE.initialize(new URL("file:"
 				+ new File("log4j.properties").getAbsolutePath()));
-		
+
 		royalsAndLoyals();
 
 		pml();
 
 		simple();
-		
+
+		pain();
+
 	}
 
 	private static void royalsAndLoyals() {
-	
+
 		/*
 		 * Royals & Loyals
 		 */
 		System.out.println("Royals and Loyals");
 		System.out.println("-----------------");
 		System.out.println();
-	
+
 		try {
 			IModel model =
 					StandaloneFacade.INSTANCE.loadUMLModel(rlModel, new File(
 							"lib/org.eclipse.uml2.uml.resources_3.0.0.v200906011111.jar"));
-	
+
 			IModelInstance modelInstance =
 					StandaloneFacade.INSTANCE.loadJavaModelInstance(model, rlInstance);
-	
+
 			List<Constraint> constraintList =
 					StandaloneFacade.INSTANCE
 							.parseOclConstraints(model, rlOclConstraints);
-	
+
 			long start = System.currentTimeMillis();
-	
+
 			List<IInterpretationResult> results =
 					StandaloneFacade.INSTANCE.interpretEverything(modelInstance,
 							constraintList);
-	
+
 			long end = System.currentTimeMillis();
-	
+
 			for (IInterpretationResult result : results) {
 				System.out.println("  " + result.getModelObject() + ": "
 						+ result.getResult());
 			}
-	
+
 			System.out.println("time for interpretation: " + (end - start));
-	
-			
+
 			/*
 			 * Royals & Loyals - Code generation
 			 */
@@ -101,20 +109,21 @@ public class StandaloneDresdenOCLExample {
 			System.out.println("Royals & Loyals - Code generation");
 			System.out.println("---------------------------------");
 			System.out.println();
-	
-			IOcl22CodeSettings settings = Ocl22JavaFactory.getInstance().createJavaCodeGeneratorSettings();
+
+			IOcl22CodeSettings settings =
+					Ocl22JavaFactory.getInstance().createJavaCodeGeneratorSettings();
 			settings.setSourceDirectory("src-gen/");
 			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList, settings);
-			
+
 			System.out.println("Finished code generation.");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private static void pml() {
-	
+
 		/*
 		 * PML
 		 */
@@ -122,27 +131,27 @@ public class StandaloneDresdenOCLExample {
 		System.out.println("Plug-in Modeling Language (PML)");
 		System.out.println("-------------------------------");
 		System.out.println();
-	
+
 		try {
 			IModel model = StandaloneFacade.INSTANCE.loadEcoreModel(pmlModel);
-	
+
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("pml",
 					new XMIResourceFactoryImpl());
 			PmlPackage.eINSTANCE.eClass();
-	
+
 			IModelInstance modelInstance =
 					StandaloneFacade.INSTANCE.loadEcoreModelInstance(model, pmlInstance);
-	
+
 			List<Constraint> constraintList =
 					StandaloneFacade.INSTANCE.parseOclConstraints(model,
 							pmlOclConstraints);
-	
+
 			for (IInterpretationResult result : StandaloneFacade.INSTANCE
 					.interpretEverything(modelInstance, constraintList)) {
 				System.out.println("  " + result.getModelObject() + ": "
 						+ result.getResult());
 			}
-	
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -163,15 +172,15 @@ public class StandaloneDresdenOCLExample {
 
 			// create an empty model instance and put objects into it
 			IModelInstance modelInstance = new JavaModelInstance(model);
-			
+
 			Person student = new Student();
 			student.setName("Student-work-a-lot");
 			student.setAge(23);
-			
+
 			Person prof = new Professor();
 			prof.setName("Prof. Invalid");
 			prof.setAge(-42);
-			
+
 			modelInstance.addModelInstanceElement(student);
 			modelInstance.addModelInstanceElement(prof);
 
@@ -189,5 +198,37 @@ public class StandaloneDresdenOCLExample {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void pain() {
+
+		/*
+		 * Pain
+		 */
+		System.out.println();
+		System.out.println("Pain Example");
+		System.out.println("------------");
+		System.out.println();
+
+		try {
+			IModel model = StandaloneFacade.INSTANCE.loadXSDModel(painModel);
+
+			IModelInstance modelInstance =
+					StandaloneFacade.INSTANCE.loadXMLModelInstance(model, painInstance);
+
+			List<Constraint> constraintList =
+					StandaloneFacade.INSTANCE.parseOclConstraints(model,
+							painOclConstraints);
+
+			for (IInterpretationResult result : StandaloneFacade.INSTANCE
+					.interpretEverything(modelInstance, constraintList)) {
+				System.out.println("  " + result.getModelObject() + ": "
+						+ result.getResult());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
