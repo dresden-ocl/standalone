@@ -1,3 +1,5 @@
+This is the Standalone version of DresdenOCL which can be used in Java projects without Eclipse or OSGi running.
+
 Information on the Standalone DresdenOCL can be found in the manual 
 (http://dresden-ocl.svn.sourceforge.net/viewvc/dresden-ocl/trunk/ocl20forEclipse/doc/pdf/manual.pdf).
 
