@@ -15,41 +15,38 @@ import tudresden.ocl20.pivot.interpreter.IInterpretationResult;
 import tudresden.ocl20.pivot.model.IModel;
 import tudresden.ocl20.pivot.modelinstance.IModelInstance;
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.modelinstance.JavaModelInstance;
-import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
-import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
 import tudresden.ocl20.pivot.standalone.facade.StandaloneFacade;
+import tudresden.ocl20.pivot.tools.codegen.ocl2java.IOcl2JavaSettings;
+import tudresden.ocl20.pivot.tools.codegen.ocl2java.Ocl2JavaFactory;
 
 public class StandaloneDresdenOCLExample {
 
 	final static File rlModel = new File("resources/model/royalsandloyals.uml");
-	final static File rlInstance =
-			new File(
-					"resources/modelinstance/tudresden/ocl20/pivot/examples/royalsandloyals/instance/ModelInstanceProviderClass.class");
-	final static File rlOclConstraints =
-			new File("resources/constraints/rl_allConstraints.ocl");
+	final static File rlInstance = new File(
+			"resources/modelinstance/tudresden/ocl20/pivot/examples/royalsandloyals/instance/ModelInstanceProviderClass.class");
+	final static File rlOclConstraints = new File(
+			"resources/constraints/rl_allConstraints.ocl");
 
 	final static File pmlModel = new File("resources/model/pml.ecore");
-	final static File pmlInstance =
-			new File("resources/modelinstance/goodModelInstance.pml");
-	final static File pmlOclConstraints =
-			new File("resources/constraints/pml_wfrs.ocl");
+	final static File pmlInstance = new File(
+			"resources/modelinstance/goodModelInstance.pml");
+	final static File pmlOclConstraints = new File(
+			"resources/constraints/pml_wfrs.ocl");
 
-	final static File simpleModel =
-			new File(
-					"resources/model/tudresden/ocl20/pivot/examples/simple/ModelProviderClass.class");
-	final static File simpleInstance =
-			new File(
-					"resources/modelinstance/tudresden/ocl20/pivot/examples/simple/instance/ModelInstanceProviderClass.class");
-	final static File simpleOclConstraints =
-			new File("resources/constraints/simple_allConstraints.ocl");
+	final static File simpleModel = new File(
+			"resources/model/tudresden/ocl20/pivot/examples/simple/ModelProviderClass.class");
+	final static File simpleInstance = new File(
+			"resources/modelinstance/tudresden/ocl20/pivot/examples/simple/instance/ModelInstanceProviderClass.class");
+	final static File simpleOclConstraints = new File(
+			"resources/constraints/simple_allConstraints.ocl");
 
-	final static File painModel =
-			new File("resources/model/pain.008.001.01corrected.xsd");
-	final static File painInstance =
-			new File("resources/modelinstance/BusEx1.xml");
-	final static File painOclConstraints =
-			new File("resources/constraints/pain_wfrs.ocl");
+	final static File painModel = new File(
+			"resources/model/pain.008.001.01corrected.xsd");
+	final static File painInstance = new File(
+			"resources/modelinstance/BusEx1.xml");
+	final static File painOclConstraints = new File(
+			"resources/constraints/pain_wfrs.ocl");
 
 	public static void main(String[] args) throws Exception {
 
@@ -76,22 +73,19 @@ public class StandaloneDresdenOCLExample {
 		System.out.println();
 
 		try {
-			IModel model =
-					StandaloneFacade.INSTANCE.loadUMLModel(rlModel, new File(
-							"lib/org.eclipse.uml2.uml.resources_3.0.0.v200906011111.jar"));
+			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(rlModel, new File(
+					"lib/org.eclipse.uml2.uml.resources_3.1.0.v201005031530.jar"));
 
-			IModelInstance modelInstance =
-					StandaloneFacade.INSTANCE.loadJavaModelInstance(model, rlInstance);
+			IModelInstance modelInstance = StandaloneFacade.INSTANCE
+					.loadJavaModelInstance(model, rlInstance);
 
-			List<Constraint> constraintList =
-					StandaloneFacade.INSTANCE
-							.parseOclConstraints(model, rlOclConstraints);
+			List<Constraint> constraintList = StandaloneFacade.INSTANCE
+					.parseOclConstraints(model, rlOclConstraints);
 
 			long start = System.currentTimeMillis();
 
-			List<IInterpretationResult> results =
-					StandaloneFacade.INSTANCE.interpretEverything(modelInstance,
-							constraintList);
+			List<IInterpretationResult> results = StandaloneFacade.INSTANCE
+					.interpretEverything(modelInstance, constraintList);
 
 			long end = System.currentTimeMillis();
 
@@ -110,8 +104,8 @@ public class StandaloneDresdenOCLExample {
 			System.out.println("---------------------------------");
 			System.out.println();
 
-			IOcl22CodeSettings settings =
-					Ocl22JavaFactory.getInstance().createJavaCodeGeneratorSettings();
+			IOcl2JavaSettings settings = Ocl2JavaFactory.getInstance()
+					.createJavaCodeGeneratorSettings();
 			settings.setSourceDirectory("src-gen/");
 			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList, settings);
 
@@ -139,12 +133,11 @@ public class StandaloneDresdenOCLExample {
 					new XMIResourceFactoryImpl());
 			PmlPackage.eINSTANCE.eClass();
 
-			IModelInstance modelInstance =
-					StandaloneFacade.INSTANCE.loadEcoreModelInstance(model, pmlInstance);
+			IModelInstance modelInstance = StandaloneFacade.INSTANCE
+					.loadEcoreModelInstance(model, pmlInstance);
 
-			List<Constraint> constraintList =
-					StandaloneFacade.INSTANCE.parseOclConstraints(model,
-							pmlOclConstraints);
+			List<Constraint> constraintList = StandaloneFacade.INSTANCE
+					.parseOclConstraints(model, pmlOclConstraints);
 
 			for (IInterpretationResult result : StandaloneFacade.INSTANCE
 					.interpretEverything(modelInstance, constraintList)) {
@@ -184,9 +177,8 @@ public class StandaloneDresdenOCLExample {
 			modelInstance.addModelInstanceElement(student);
 			modelInstance.addModelInstanceElement(prof);
 
-			List<Constraint> constraintList =
-					StandaloneFacade.INSTANCE.parseOclConstraints(model,
-							simpleOclConstraints);
+			List<Constraint> constraintList = StandaloneFacade.INSTANCE
+					.parseOclConstraints(model, simpleOclConstraints);
 
 			for (IInterpretationResult result : StandaloneFacade.INSTANCE
 					.interpretEverything(modelInstance, constraintList)) {
@@ -213,12 +205,11 @@ public class StandaloneDresdenOCLExample {
 		try {
 			IModel model = StandaloneFacade.INSTANCE.loadXSDModel(painModel);
 
-			IModelInstance modelInstance =
-					StandaloneFacade.INSTANCE.loadXMLModelInstance(model, painInstance);
+			IModelInstance modelInstance = StandaloneFacade.INSTANCE
+					.loadXMLModelInstance(model, painInstance);
 
-			List<Constraint> constraintList =
-					StandaloneFacade.INSTANCE.parseOclConstraints(model,
-							painOclConstraints);
+			List<Constraint> constraintList = StandaloneFacade.INSTANCE
+					.parseOclConstraints(model, painOclConstraints);
 
 			for (IInterpretationResult result : StandaloneFacade.INSTANCE
 					.interpretEverything(modelInstance, constraintList)) {

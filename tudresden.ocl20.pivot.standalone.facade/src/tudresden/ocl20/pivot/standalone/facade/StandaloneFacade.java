@@ -4,8 +4,7 @@ package tudresden.ocl20.pivot.standalone.facade;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +27,9 @@ import tudresden.ocl20.pivot.interpreter.IInterpretationResult;
 import tudresden.ocl20.pivot.interpreter.IOclInterpreter;
 import tudresden.ocl20.pivot.interpreter.OclInterpreterPlugin;
 import tudresden.ocl20.pivot.interpreter.internal.OclInterpreter;
+import tudresden.ocl20.pivot.language.ocl.resource.ocl.Ocl22Parser;
+import tudresden.ocl20.pivot.language.ocl.resource.ocl.OclReferenceResolveHelperProvider;
+import tudresden.ocl20.pivot.language.ocl.staticsemantics.postporcessor.OclReferenceResolveHelper;
 import tudresden.ocl20.pivot.model.IModel;
 import tudresden.ocl20.pivot.model.ModelAccessException;
 import tudresden.ocl20.pivot.model.metamodel.IMetamodel;
@@ -38,11 +40,6 @@ import tudresden.ocl20.pivot.modelinstancetype.ecore.internal.provider.EcoreMode
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.provider.JavaModelInstanceProvider;
 import tudresden.ocl20.pivot.modelinstancetype.types.IModelInstanceObject;
 import tudresden.ocl20.pivot.modelinstancetype.xml.internal.provider.XmlModelInstanceProvider;
-import tudresden.ocl20.pivot.ocl2java.IOcl22Code;
-import tudresden.ocl20.pivot.ocl2java.IOcl22CodeSettings;
-import tudresden.ocl20.pivot.ocl2java.Ocl22JavaFactory;
-import tudresden.ocl20.pivot.ocl2java.exception.Ocl22CodeException;
-import tudresden.ocl20.pivot.ocl2parser.parser.Ocl2Parser;
 import tudresden.ocl20.pivot.parser.ParseException;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
 import tudresden.ocl20.pivot.standalone.codegeneration.StandaloneTemplateEngineRegistry;
@@ -50,6 +47,10 @@ import tudresden.ocl20.pivot.standalone.metamodel.EcoreMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.JavaMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.UMLMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.XSDMetamodel;
+import tudresden.ocl20.pivot.tools.codegen.exception.Ocl2CodeException;
+import tudresden.ocl20.pivot.tools.codegen.ocl2java.IOcl2Java;
+import tudresden.ocl20.pivot.tools.codegen.ocl2java.IOcl2JavaSettings;
+import tudresden.ocl20.pivot.tools.codegen.ocl2java.Ocl2JavaFactory;
 import tudresden.ocl20.pivot.tools.template.TemplatePlugin;
 
 /**
@@ -70,7 +71,8 @@ import tudresden.ocl20.pivot.tools.template.TemplatePlugin;
  * log4j.properties</li>
  * <li>load models ({@link #loadUMLModel(File)}, {@link #loadEcoreModel(File)})</li>
  * <li>parse OCL constraints that are listed in a file (
- * {@link #parseOclConstraints(IModel, File)})</li>
+ * {@link #parseOclConstraints(IModel, File)},
+ * {@link #parseOclConstraints(IModel, URI)})</li>
  * <li>load model instances ({@link #loadJavaModelInstance(IModel, File)},
  * {@link #loadEcoreModelInstance(IModel, File)})</li>
  * <li>interprete a given list of constraints on a model instance (
@@ -91,14 +93,13 @@ public class StandaloneFacade {
 	private boolean registeredUMLMetamodel = false;
 	private boolean registeredEcoreMetamodel = false;
 
-	private IMetamodelRegistry standaloneMetamodelRegistry =
-			new StandaloneMetamodelRegistry();
+	private IMetamodelRegistry standaloneMetamodelRegistry = new StandaloneMetamodelRegistry();
 
 	private IModelInstanceProvider javaModelInstanceProvider;
 	private IModelInstanceProvider ecoreModelInstanceProvider;
 	private IModelInstanceProvider xmlModelInstanceProvider;
 
-	private IOcl22Code javaCodeGenerator;
+	private IOcl2Java javaCodeGenerator;
 
 	/**
 	 * Returns the single instance of the {@link StandaloneFacade}.
@@ -148,8 +149,13 @@ public class StandaloneFacade {
 							StandaloneFacade.class
 									.getResourceAsStream("/oclstandardlibrary.types")));
 
+			// only needed for code generation
 			TemplatePlugin
 					.setTempateEngineRegistry(new StandaloneTemplateEngineRegistry());
+
+			// needed for parsing (static semantics analysis)
+			OclReferenceResolveHelperProvider
+					.setOclReferenceResolveHelper(new OclReferenceResolveHelper());
 
 			initialized = true;
 		}
@@ -165,7 +171,7 @@ public class StandaloneFacade {
 	 * 
 	 * @param modelFile
 	 *          the UML model
-	 *@param umlResources
+	 * @param umlResources
 	 *          points to the jar file of the plug-in
 	 *          <code>org.eclipse.uml2.uml.resources</code>; this is necessary in
 	 *          order to use primitive types like String and Integer in UML models
@@ -188,8 +194,8 @@ public class StandaloneFacade {
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
 					UMLResource.FILE_EXTENSION, UMLResourceFactoryImpl.INSTANCE);
 
-			URI pluginURI =
-					URI.createURI("jar:file:" + umlResources.getAbsolutePath() + "!/");
+			URI pluginURI = URI.createURI("jar:file:"
+					+ umlResources.getAbsolutePath() + "!/");
 			URIConverter.URI_MAP.put(URI.createURI(UMLResource.LIBRARIES_PATHMAP),
 					pluginURI.appendSegment("libraries").appendSegment(""));
 			URIConverter.URI_MAP.put(URI.createURI(UMLResource.METAMODELS_PATHMAP),
@@ -288,18 +294,37 @@ public class StandaloneFacade {
 	 * @param oclFile
 	 *          the file containing the OCL constraints
 	 * @return a lit of {@link Constraint}s
-	 * @throws FileNotFoundException
-	 *           if the OCL file cannot be found
+	 * @throws IOException
 	 * @throws ParseException
-	 *           if something went wrong during parsing or static semantics
-	 *           checking
+	 *           if something went wrong during parsing
 	 */
 	public List<Constraint> parseOclConstraints(IModel model, File oclFile)
-			throws FileNotFoundException, ParseException {
+			throws IOException, ParseException {
 
-		Reader reader = new FileReader(oclFile);
+		if (!oclFile.exists())
+			throw new FileNotFoundException("Cannot find file "
+					+ oclFile.getCanonicalPath() + ".");
 
-		return Ocl2Parser.INSTANCE.doParse(model, reader);
+		return Ocl22Parser.INSTANCE.doParse(model,
+				URI.createFileURI(oclFile.getCanonicalPath()));
+	}
+
+	/**
+	 * Parses the OCL constraints in a given URI and returns a list of
+	 * {@link Constraint}s that can be used for interpretation.
+	 * 
+	 * @param model
+	 *          the model the constraints are defined on
+	 * @param uri
+	 *          the {@link URI} of the OCL constraints
+	 * @return a lit of {@link Constraint}s
+	 * @throws ParseException
+	 *           if something went wrong during parsing
+	 */
+	public List<Constraint> parseOclConstraints(IModel model, URI uri)
+			throws ParseException {
+
+		return Ocl22Parser.INSTANCE.doParse(model, uri);
 	}
 
 	/**
@@ -319,8 +344,8 @@ public class StandaloneFacade {
 
 		initJavaModelInstanceProvider();
 
-		IModelInstance modelInstance =
-				javaModelInstanceProvider.getModelInstance(modelInstanceFile, model);
+		IModelInstance modelInstance = javaModelInstanceProvider.getModelInstance(
+				modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -342,8 +367,8 @@ public class StandaloneFacade {
 
 		initEcoreModelInstanceProvider();
 
-		IModelInstance modelInstance =
-				ecoreModelInstanceProvider.getModelInstance(modelInstanceFile, model);
+		IModelInstance modelInstance = ecoreModelInstanceProvider.getModelInstance(
+				modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -364,8 +389,8 @@ public class StandaloneFacade {
 
 		initXMLModelInstanceProvider();
 
-		IModelInstance modelInstance =
-				xmlModelInstanceProvider.getModelInstance(modelInstanceFile, model);
+		IModelInstance modelInstance = xmlModelInstanceProvider.getModelInstance(
+				modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -385,16 +410,15 @@ public class StandaloneFacade {
 
 		initInterpreterPlugin();
 
-		List<IInterpretationResult> resultList =
-				new LinkedList<IInterpretationResult>();
+		List<IInterpretationResult> resultList = new LinkedList<IInterpretationResult>();
 
 		IOclInterpreter interpreter = new OclInterpreter(modelInstance);
 
 		for (IModelInstanceObject imiObject : modelInstance
 				.getAllModelInstanceObjects()) {
 			for (Constraint constraint : constraintList) {
-				IInterpretationResult result =
-						interpreter.interpretConstraint(constraint, imiObject);
+				IInterpretationResult result = interpreter.interpretConstraint(
+						constraint, imiObject);
 				if (result != null)
 					resultList.add(result);
 			}
@@ -409,27 +433,27 @@ public class StandaloneFacade {
 	 * @param constraints
 	 *          the constraints for which AspectJ code should be created
 	 * @param settings
-	 *          the {@link IOcl22CodeSettings} containing at least a directory
-	 *          into which the code should be generated
-	 * @throws Ocl22CodeException
-	 *           if the {@link IOcl22CodeSettings} were not set properly or
+	 *          the {@link IOcl2JavaSettings} containing at least a directory into
+	 *          which the code should be generated
+	 * @throws Ocl2CodeException
+	 *           if the {@link IOcl2JavaSettings} were not set properly or
 	 *           something went wrong during code generation
 	 */
 	public void generateAspectJCode(List<Constraint> constraints,
-			IOcl22CodeSettings settings) throws Ocl22CodeException {
+			IOcl2JavaSettings settings) throws Ocl2CodeException {
 
 		if (settings == null)
-			throw new Ocl22CodeException("The IOcl22CodeSettings cannot be null.");
+			throw new Ocl2CodeException("The IOcl2JavaSettings cannot be null.");
 
 		if (settings.getSourceDirectory() == null)
-			throw new Ocl22CodeException(
-					"The directory for code generation cannot be null. Set the value in the IOcl22CodeSettings.");
+			throw new Ocl2CodeException(
+					"The directory for code generation cannot be null. Set the value in the IOcl2JavaSettings.");
 
 		settings.setSaveCode(true);
 
 		if (javaCodeGenerator == null) {
-			javaCodeGenerator =
-					Ocl22JavaFactory.getInstance().createJavaCodeGenerator();
+			javaCodeGenerator = Ocl2JavaFactory.getInstance()
+					.createJavaCodeGenerator();
 		}
 		// no else.
 
