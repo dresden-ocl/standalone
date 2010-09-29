@@ -17,8 +17,12 @@ import tudresden.ocl20.pivot.modelinstance.IModelInstance;
 import tudresden.ocl20.pivot.modelinstancetype.java.internal.modelinstance.JavaModelInstance;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
 import tudresden.ocl20.pivot.standalone.facade.StandaloneFacade;
+import tudresden.ocl20.pivot.tools.codegen.declarativ.IOcl2DeclSettings;
+import tudresden.ocl20.pivot.tools.codegen.declarativ.Ocl2DeclCodeFactory;
+import tudresden.ocl20.pivot.tools.codegen.declarativ.impl.Ocl2DeclSettings;
 import tudresden.ocl20.pivot.tools.codegen.ocl2java.IOcl2JavaSettings;
 import tudresden.ocl20.pivot.tools.codegen.ocl2java.Ocl2JavaFactory;
+import tudresden.ocl20.pivot.tools.template.TemplatePlugin;
 
 public class StandaloneDresdenOCLExample {
 
@@ -48,6 +52,11 @@ public class StandaloneDresdenOCLExample {
 	final static File painOclConstraints = new File(
 			"resources/constraints/pain_wfrs.ocl");
 
+	final static File universityModel = new File(
+			"resources/model/university_complex.uml");
+	final static File universityConstraints = new File(
+			"resources/constraints/university_complex.ocl");
+
 	public static void main(String[] args) throws Exception {
 
 		StandaloneFacade.INSTANCE.initialize(new URL("file:"
@@ -61,6 +70,8 @@ public class StandaloneDresdenOCLExample {
 
 		pain();
 
+		university();
+
 	}
 
 	private static void royalsAndLoyals() {
@@ -73,8 +84,8 @@ public class StandaloneDresdenOCLExample {
 		System.out.println();
 
 		try {
-			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(rlModel, new File(
-					"lib/org.eclipse.uml2.uml.resources_3.1.0.v201005031530.jar"));
+			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(rlModel,
+					getUMLResources());
 
 			IModelInstance modelInstance = StandaloneFacade.INSTANCE
 					.loadJavaModelInstance(model, rlInstance);
@@ -106,7 +117,7 @@ public class StandaloneDresdenOCLExample {
 
 			IOcl2JavaSettings settings = Ocl2JavaFactory.getInstance()
 					.createJavaCodeGeneratorSettings();
-			settings.setSourceDirectory("src-gen/");
+			settings.setSourceDirectory("src-gen/rl/");
 			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList, settings);
 
 			System.out.println("Finished code generation.");
@@ -221,5 +232,47 @@ public class StandaloneDresdenOCLExample {
 			e.printStackTrace();
 		}
 
+	}
+
+	private static void university() {
+
+		/*
+		 * University
+		 */
+		System.out.println();
+		System.out.println("University Example (SQL Code Generation)");
+		System.out.println("----------------------------------------");
+		System.out.println();
+
+		try {
+			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(universityModel,
+					getUMLResources());
+
+			List<Constraint> constraintList = StandaloneFacade.INSTANCE
+					.parseOclConstraints(model, universityConstraints);
+
+			IOcl2DeclSettings settings = Ocl2DeclCodeFactory.getInstance()
+					.createOcl2DeclCodeSettings();
+			settings.setSourceDirectory("src-gen/university/");
+			settings.setModus(Ocl2DeclSettings.MODUS_TYPED);
+			settings.setSaveCode(true);
+			settings.setTemplateGroup(TemplatePlugin.getTemplateGroupRegistry()
+					.getTemplateGroup("Standard(SQL)"));
+			StandaloneFacade.INSTANCE
+					.generateSQLCode(constraintList, settings, model);
+
+			System.out.println("Finished code generation.");
+
+			settings.setSaveCode(false);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private static File getUMLResources() {
+		return new File(
+				"lib/org.eclipse.uml2.uml.resources_3.1.0.v201005031530.jar");
 	}
 }
