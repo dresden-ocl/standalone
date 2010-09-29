@@ -1,7 +1,5 @@
 package tudresden.ocl20.pivot.standalone.facade;
 
-// FIXME MIchael: XML example
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,16 +40,34 @@ import tudresden.ocl20.pivot.modelinstancetype.types.IModelInstanceObject;
 import tudresden.ocl20.pivot.modelinstancetype.xml.internal.provider.XmlModelInstanceProvider;
 import tudresden.ocl20.pivot.parser.ParseException;
 import tudresden.ocl20.pivot.pivotmodel.Constraint;
-import tudresden.ocl20.pivot.standalone.codegeneration.StandaloneTemplateEngineRegistry;
+import tudresden.ocl20.pivot.standalone.codegeneration.StandaloneTransformationRegistry;
 import tudresden.ocl20.pivot.standalone.metamodel.EcoreMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.JavaMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.UMLMetamodel;
 import tudresden.ocl20.pivot.standalone.metamodel.XSDMetamodel;
+import tudresden.ocl20.pivot.tools.codegen.declarativ.IOcl2DeclSettings;
+import tudresden.ocl20.pivot.tools.codegen.declarativ.ocl2sql.IOcl2Sql;
+import tudresden.ocl20.pivot.tools.codegen.declarativ.ocl2sql.Ocl2SQLFactory;
 import tudresden.ocl20.pivot.tools.codegen.exception.Ocl2CodeException;
 import tudresden.ocl20.pivot.tools.codegen.ocl2java.IOcl2Java;
 import tudresden.ocl20.pivot.tools.codegen.ocl2java.IOcl2JavaSettings;
 import tudresden.ocl20.pivot.tools.codegen.ocl2java.Ocl2JavaFactory;
+import tudresden.ocl20.pivot.tools.template.ITemplateEngineRegistry;
+import tudresden.ocl20.pivot.tools.template.ITemplateGroupRegistry;
 import tudresden.ocl20.pivot.tools.template.TemplatePlugin;
+import tudresden.ocl20.pivot.tools.template.exception.TemplateException;
+import tudresden.ocl20.pivot.tools.template.impl.StandaloneTemplateEngineRegistry;
+import tudresden.ocl20.pivot.tools.template.impl.StandaloneTemplateGroupRegistry;
+import tudresden.ocl20.pivot.tools.template.internal.TemplateGroup;
+import tudresden.ocl20.pivot.tools.template.sql.SQLTemplate;
+import tudresden.ocl20.pivot.tools.template.stringtemplate.StringTemplateEngine;
+import tudresden.ocl20.pivot.tools.transformation.ITransformationRegistry;
+import tudresden.ocl20.pivot.tools.transformation.TransformationPlugin;
+import tudresden.ocl20.pivot.tools.transformation.pivot2sql.impl.Cwm2DdlImpl;
+import tudresden.ocl20.pivot.tools.transformation.pivot2sql.impl.Pivot2CwmImpl;
+import tudresden.ocl20.pivot.tools.transformation.pivot2sql.impl.Pivot2Ddl;
+import tudresden.ocl20.pivot.tools.transformation.pivot2sql.impl.Pivot2DdlAndMappedModel;
+import tudresden.ocl20.pivot.tools.transformation.pivot2sql.impl.Pivot2MappedModelImpl;
 
 /**
  * <p>
@@ -100,6 +116,7 @@ public class StandaloneFacade {
 	private IModelInstanceProvider xmlModelInstanceProvider;
 
 	private IOcl2Java javaCodeGenerator;
+	private IOcl2Sql sqlCodeGenerator;
 
 	/**
 	 * Returns the single instance of the {@link StandaloneFacade}.
@@ -132,8 +149,9 @@ public class StandaloneFacade {
 	 * @param loggerPropertiesUrl
 	 *          the {@link URL} of log4j.properties or <code>null</code> if you
 	 *          don't want to log
+	 * @throws TemplateException 
 	 */
-	public void initialize(URL loggerPropertiesUrl) {
+	public void initialize(URL loggerPropertiesUrl) throws TemplateException {
 
 		if (!initialized) {
 			/*
@@ -143,6 +161,7 @@ public class StandaloneFacade {
 			new LoggingPlugin(loggerPropertiesUrl);
 			new EssentialOclPlugin();
 			new TemplatePlugin();
+			new TransformationPlugin();
 
 			EssentialOclPlugin
 					.setOclLibraryProvider(new StandaloneOclLibraryProvider(
@@ -150,9 +169,29 @@ public class StandaloneFacade {
 									.getResourceAsStream("/oclstandardlibrary.types")));
 
 			// only needed for code generation
+			final StringTemplateEngine stringTemplateEngine = new StringTemplateEngine();
+			
+			ITemplateEngineRegistry templateEngineRegistry = new StandaloneTemplateEngineRegistry();
+			templateEngineRegistry.addTemplateEngine(stringTemplateEngine);
+			
+			ITemplateGroupRegistry templateGroupRegistry = new StandaloneTemplateGroupRegistry();
+			templateGroupRegistry.addTemplateGroup(new TemplateGroup(stringTemplateEngine.getDisplayName(), null, stringTemplateEngine));
+			
 			TemplatePlugin
-					.setTempateEngineRegistry(new StandaloneTemplateEngineRegistry());
+					.setTempateEngineRegistry(templateEngineRegistry);
+			TemplatePlugin.setTempateGroupRegistry(templateGroupRegistry);
 
+			SQLTemplate.loadSQLTemplates();
+			
+			ITransformationRegistry transformationRegistry = new StandaloneTransformationRegistry();
+			TransformationPlugin.setTransformationRegistry(transformationRegistry);
+			transformationRegistry.addTransformation(new Pivot2MappedModelImpl(null, null));
+			transformationRegistry.addTransformation(new Pivot2CwmImpl(null, null));
+			transformationRegistry.addTransformation(new Pivot2Ddl(null, null));
+			transformationRegistry.addTransformation(new Cwm2DdlImpl(null, null));
+			transformationRegistry.addTransformation(new Pivot2DdlAndMappedModel(null, null));
+			
+			
 			// needed for parsing (static semantics analysis)
 			OclReferenceResolveHelperProvider
 					.setOclReferenceResolveHelper(new OclReferenceResolveHelper());
@@ -462,6 +501,51 @@ public class StandaloneFacade {
 		javaCodeGenerator.transformInstrumentationCode(constraints);
 
 		settings.setSaveCode(false);
+	}
+
+	/**
+	 * <p>
+	 * Generates the SQL code for a given {@link List} of {@link Constraint} s and
+	 * a given {@link IOcl2DeclSettings}.
+	 * </p>
+	 * 
+	 * @param constraints
+	 *          The {@link Constraint}s used for code generation.
+	 * @param settings
+	 *          The {@link IOcl2DeclSettings} used for code generation (can be
+	 *          <code>null</code> if default settings shall be used).
+	 * @param model
+	 *          The {@link IModel} for code generation
+	 * @return The generated SQL code as a set of {@link String}s.
+	 * @throws IllegalArgumentException
+	 *           Thrown if the {@link List} of {@link Constraint}s is empty or
+	 *           <code>null</code>.
+	 * @throws Ocl2CodeException
+	 */
+	public List<String> generateSQLCode(List<Constraint> constraints,
+			IOcl2DeclSettings settings, IModel model)
+			throws IllegalArgumentException, Ocl2CodeException {
+
+		if (constraints == null || constraints.size() == 0) {
+			throw new IllegalArgumentException(
+					"The list of constraints must not be emtpy.");
+		}
+		// no else.	
+
+		if (settings == null) {
+			throw new IllegalArgumentException("IOcl2DeclSettings cannot be null.");
+		}
+		// no else.
+
+		if (sqlCodeGenerator == null) {
+			sqlCodeGenerator = Ocl2SQLFactory.getInstance().createSQLCodeGenerator();
+		}
+		// no else.
+
+		sqlCodeGenerator.resetEnvironment();
+		sqlCodeGenerator.setSettings(settings);
+		sqlCodeGenerator.setInputModel(model);
+		return sqlCodeGenerator.transformFragmentCode(constraints);
 	}
 
 	private void initInterpreterPlugin() {
