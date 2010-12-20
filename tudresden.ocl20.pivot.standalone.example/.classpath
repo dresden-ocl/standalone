@@ -30,7 +30,6 @@
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.pivotmodel_3.0.0.201009131109.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.pivotmodel.semantics_3.0.0.201009131109.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.standardlibrary.java_3.0.0.201009131109.jar"/>
-	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.standalone.facade_3.0.0" sourcepath="/tudresden.ocl20.pivot.standalone.facade"/>
 	<classpathentry kind="lib" path="plugins/scala-library.jar" sourcepath="/scala.library/lib/scala-library-src.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.resources_3.6.0.v20100526-0737.jar"/>
 	<classpathentry kind="lib" path="plugins/org.kiama.attribution_3.0.0.201009131109.jar" sourcepath="/org.kiama.attribution"/>
@@ -59,5 +58,6 @@
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen_3.0.0.201009131109.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.template.sql_3.0.0.201009271412.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.transformation_3.0.0.201009280950.jar" sourcepath="/tudresden.ocl20.pivot.tools.transformation"/>
+	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.standalone.facade_3.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

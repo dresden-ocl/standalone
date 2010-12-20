@@ -118,8 +118,11 @@ public class StandaloneDresdenOCLExample {
 			IOcl2JavaSettings settings = Ocl2JavaFactory.getInstance()
 					.createJavaCodeGeneratorSettings();
 			settings.setSourceDirectory("src-gen/rl/");
-			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList, settings);
 
+			System.out.println("Generate aspectJ files to "
+					+ settings.getSourceDirectory() + " ...");
+			StandaloneFacade.INSTANCE.generateAspectJCode(constraintList,
+					settings);
 			System.out.println("Finished code generation.");
 
 		} catch (Exception e) {
@@ -140,8 +143,8 @@ public class StandaloneDresdenOCLExample {
 		try {
 			IModel model = StandaloneFacade.INSTANCE.loadEcoreModel(pmlModel);
 
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("pml",
-					new XMIResourceFactoryImpl());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
+					"pml", new XMIResourceFactoryImpl());
 			PmlPackage.eINSTANCE.eClass();
 
 			IModelInstance modelInstance = StandaloneFacade.INSTANCE
@@ -195,9 +198,26 @@ public class StandaloneDresdenOCLExample {
 					.interpretEverything(modelInstance, constraintList)) {
 				System.out.println("  " + result.getModelObject() + " ("
 						+ result.getConstraint().getKind() + ": "
-						+ result.getConstraint().getSpecification().getBody() + "): "
-						+ result.getResult());
+						+ result.getConstraint().getSpecification().getBody()
+						+ "): " + result.getResult());
 			}
+
+			IOcl2JavaSettings settings = Ocl2JavaFactory.getInstance()
+					.createJavaCodeGeneratorSettings();
+			settings.setSourceDirectory("src-gen/simple/");
+
+			System.out.println();
+			System.out.println("Generate Java Fragements:");
+			System.out.println("-------------------------");
+
+			for (String fragment : StandaloneFacade.INSTANCE.generateJavaCode(
+					constraintList, settings)) {
+				System.out.println(fragment);
+				System.out.println();
+
+			}
+			// end for.
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -245,8 +265,8 @@ public class StandaloneDresdenOCLExample {
 		System.out.println();
 
 		try {
-			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(universityModel,
-					getUMLResources());
+			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(
+					universityModel, getUMLResources());
 
 			List<Constraint> constraintList = StandaloneFacade.INSTANCE
 					.parseOclConstraints(model, universityConstraints);
@@ -258,8 +278,8 @@ public class StandaloneDresdenOCLExample {
 			settings.setSaveCode(true);
 			settings.setTemplateGroup(TemplatePlugin.getTemplateGroupRegistry()
 					.getTemplateGroup("Standard(SQL)"));
-			StandaloneFacade.INSTANCE
-					.generateSQLCode(constraintList, settings, model);
+			StandaloneFacade.INSTANCE.generateSQLCode(constraintList, settings,
+					model);
 
 			System.out.println("Finished code generation.");
 
