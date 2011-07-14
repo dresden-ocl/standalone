@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import org.dresdenocl.metrics.OclMetrics;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
@@ -125,6 +126,13 @@ public class StandaloneDresdenOCLExample {
 					settings);
 			System.out.println("Finished code generation.");
 
+			System.out.println("Royals & Loyals - OCL Metrics");
+			System.out.println("---------------------------------");
+			System.out.println();
+			System.out.println(OclMetrics.computeMetric(constraintList)
+					.getReport());
+			System.out.println();
+			System.out.println("Finished metrics computation.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

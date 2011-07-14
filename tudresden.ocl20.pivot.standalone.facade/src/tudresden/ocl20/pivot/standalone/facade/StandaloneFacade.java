@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.dresdenocl.metrics.OclMetrics;
+import org.dresdenocl.metrics.metric.Metric;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -603,6 +605,40 @@ public class StandaloneFacade {
 		return sqlCodeGenerator.transformFragmentCode(constraints);
 	}
 
+	/**
+	 * Computes a {@link Metric} object containing metrics for a given
+	 * {@link Constraint}.
+	 * 
+	 * @param constraint
+	 *            The {@link Constraint} for which the {@link Metric} object
+	 *            shall be computed.
+	 * @return A {@link Metric} object containing metrics for the given
+	 *         {@link Constraint}.
+	 */
+	public static Metric getMetrics(Constraint constraint) {
+		return OclMetrics.computeMetric(constraint);
+	}
+
+	/**
+	 * Computes a {@link Metric} object containing metrics for a given
+	 * {@link Constraint}.
+	 * 
+	 * @param constraint
+	 *            The {@link Constraint} for which the {@link Metric} object
+	 *            shall be computed.
+	 * @return A {@link Metric} object containing metrics for the given
+	 *         {@link Constraint}.
+	 */
+	public static Metric getMetrics(IModel model) {
+		try {
+			return OclMetrics.computeMetric(model.getConstraints());
+		} catch (ModelAccessException e) {
+			throw new IllegalStateException(
+					"Exception during computation of metric for the given model.",
+					e);
+		}
+	}
+	
 	private void initInterpreterPlugin() {
 
 		if (!initInterpreterPlugin)

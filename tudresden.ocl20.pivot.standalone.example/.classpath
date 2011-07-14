@@ -43,7 +43,7 @@
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.modelinstance_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.modelinstancetype_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.modelinstancetype.ecore_3.1.0.201101171054.jar"/>
-	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.modelinstancetype.java_3.1.0.201101171054.jar"/>
+	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.modelinstancetype.java_3.1.0.201101171054.jar" sourcepath="/org.dresdenocl.metrics/src"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.modelinstancetype.xml_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.parser_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.pivotmodel_3.1.0.201101171054.jar"/>
@@ -52,12 +52,13 @@
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen.declarativ_3.0.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen.declarativ.ocl2sql_3.1.0.201101171054.jar"/>
-	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen.ocl2java_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen.ocl2java.types_3.0.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.CWM_3.0.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.template_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.template.sql_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.transformation_3.1.0.201101171054.jar"/>
 	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.transformation.pivot2sql_3.0.0.201101171054.jar"/>
+	<classpathentry kind="lib" path="plugins/tudresden.ocl20.pivot.tools.codegen.ocl2java_3.1.0.201102261458.jar"/>
+	<classpathentry kind="lib" path="plugins/org.dresdenocl.metrics_3.1.0.jar" sourcepath="/org.dresdenocl.metrics/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
