@@ -102,6 +102,18 @@
 
     <dependency>
       <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.metamodels.uml2</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.metamodels.xsd</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
       <artifactId>org.dresdenocl.metrics</artifactId>
       <version>${dresdenocl.version}</version>
     </dependency>
@@ -218,6 +230,25 @@
       <groupId>org.dresdenocl</groupId>
       <artifactId>org.dresdenocl.tools.transformation.pivot2sql</artifactId>
       <version>${dresdenocl.version}</version>
-    </dependency>               
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>org.eclipse.emf.ecore</artifactId>
+      <version>2.10.1.v20140901-1043</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>org.eclipse.emf.common</artifactId>
+      <version>2.10.1-v20140901-1043</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.uml2</groupId>
+      <artifactId>org.eclipse.uml2.uml</artifactId>
+      <version>5.0.1.v20140910-1354</version>
+    </dependency>
+              
   </dependencies>
 </project>
