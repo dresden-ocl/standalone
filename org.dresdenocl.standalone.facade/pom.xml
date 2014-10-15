@@ -71,13 +71,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>plugins</artifactId>
-      <version>${dresdenocl.version}</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
@@ -88,5 +81,143 @@
       <artifactId>org.dresdenocl.tools.transformation</artifactId>
       <version>${dresdenocl.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.metamodels.ecore</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.model</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.metamodels.java</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.metrics</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.logging</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.essentialocl</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>  
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.interpreter</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>  
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.language.ocl.resource.ocl</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.language.ocl.staticsemantics</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.modelinstance</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.modelinstancetype.ecore</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.modelinstancetype.java</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.modelinstancetype</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.modelinstancetype.xml</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.parser</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.pivotmodel</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.codegen</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.codegen.declarativ</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.codegen.declarativ.ocl2sql</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.codegen.ocl2java</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>   
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.template</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.template.sql</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>org.dresdenocl</groupId>
+      <artifactId>org.dresdenocl.tools.transformation.pivot2sql</artifactId>
+      <version>${dresdenocl.version}</version>
+    </dependency>               
   </dependencies>
 </project>
