@@ -61,7 +61,7 @@ import org.dresdenocl.tools.template.exception.TemplateException;
 import org.dresdenocl.tools.template.impl.StandaloneTemplateEngineRegistry;
 import org.dresdenocl.tools.template.impl.StandaloneTemplateGroupRegistry;
 import org.dresdenocl.tools.template.internal.TemplateGroup;
-import org.dresdenocl.tools.template.sql.SQLTemplate;
+import org.dresdenocl.tools.template.sql.standalone.SQLTemplate;
 import org.dresdenocl.tools.template.stringtemplate.StringTemplateEngine;
 import org.dresdenocl.tools.transformation.ITransformationRegistry;
 import org.dresdenocl.tools.transformation.TransformationPlugin;
@@ -184,7 +184,7 @@ public class StandaloneFacade {
 			TemplatePlugin.setTempateEngineRegistry(templateEngineRegistry);
 			TemplatePlugin.setTempateGroupRegistry(templateGroupRegistry);
 
-			SQLTemplate.loadSQLTemplates();
+			SQLTemplate.loadTemplates();
 
 			ITransformationRegistry transformationRegistry = new StandaloneTransformationRegistry();
 			TransformationPlugin
@@ -503,7 +503,7 @@ public class StandaloneFacade {
 			throw new Ocl2CodeException(
 					"The directory for code generation cannot be null. Set the value in the IOcl2JavaSettings.");
 
-		settings.setSaveCode(true);
+		settings.setSaveCode(1);
 
 		if (javaCodeGenerator == null) {
 			javaCodeGenerator = Ocl2JavaFactory.getInstance()
@@ -515,7 +515,7 @@ public class StandaloneFacade {
 		javaCodeGenerator.setSettings(settings);
 		javaCodeGenerator.transformInstrumentationCode(constraints);
 
-		settings.setSaveCode(false);
+		settings.setSaveCode(0);
 	}
 
 	/**
@@ -545,7 +545,7 @@ public class StandaloneFacade {
 			throw new Ocl2CodeException("The IOcl2JavaSettings cannot be null.");
 		// no else.
 
-		settings.setSaveCode(false);
+		settings.setSaveCode(0);
 
 		if (javaCodeGenerator == null) {
 			javaCodeGenerator = Ocl2JavaFactory.getInstance()
