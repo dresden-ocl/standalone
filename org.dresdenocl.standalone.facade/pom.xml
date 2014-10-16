@@ -6,8 +6,11 @@
   <artifactId>org.dresdenocl.standalone</artifactId>
   <version>3.4.0-SNAPSHOT</version>
 
+  <packaging>jar</packaging>
+
   <properties>
     <dresdenocl.version>3.4.0-SNAPSHOT</dresdenocl.version>
+    <project.build.sourceEncoding>cp1252</project.build.sourceEncoding>
   </properties>
 
   <repositories>
@@ -20,6 +23,25 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+
+    <repository>
+      <id>sonatype-nexus-releases</id>
+      <name>Sonatype Nexus Releases</name>
+      <url>https://oss.sonatype.org/content/repositories/releases/</url>
+    </repository>
+
+    <repository>
+      <id>repo</id>
+      <releases>
+        <enabled>true</enabled>
+          <checksumPolicy>ignore</checksumPolicy>
+      </releases>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>${project.baseUri}repo</url>
+    </repository>
   </repositories>
 
   <pluginRepositories>
@@ -31,16 +53,13 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
     </pluginRepository>
   </pluginRepositories>
 
   <build>
     <directory>target</directory>
     <outputDirectory>target/classes</outputDirectory>
-    <finalName>${artifactId}-${version}</finalName>
+    <finalName>${project.artifactId}-${project.version}</finalName>
     <testOutputDirectory>target/test-classes</testOutputDirectory>
     <sourceDirectory>src/main/java</sourceDirectory>
     <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
@@ -232,23 +251,47 @@
       <version>${dresdenocl.version}</version>
     </dependency>
 
+    <!-- local dependencies -->
+    <dependency>
+      <groupId>org.eclipse.core</groupId>
+      <artifactId>runtime</artifactId>
+      <version>3.10.0.v20140318-2214</version>
+    </dependency>
+
     <dependency>
       <groupId>org.eclipse.emf</groupId>
-      <artifactId>org.eclipse.emf.ecore</artifactId>
+      <artifactId>ecore</artifactId>
       <version>2.10.1.v20140901-1043</version>
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.emf</groupId>
-      <artifactId>org.eclipse.emf.common</artifactId>
-      <version>2.10.1-v20140901-1043</version>
+      <groupId>org.eclipse.emf.ecore</groupId>
+      <artifactId>xmi</artifactId>
+      <version>2.10.1.v20140901-1043</version>
     </dependency>
 
     <dependency>
       <groupId>org.eclipse.uml2</groupId>
-      <artifactId>org.eclipse.uml2.uml</artifactId>
-      <version>5.0.1.v20140910-1354</version>
+      <artifactId>common</artifactId>
+      <version>2.0.0.v20140602-0749</version>
     </dependency>
-              
+
+    <dependency>
+      <groupId>org.eclipse</groupId>
+      <artifactId>uml2</artifactId>
+      <version>5.0.0.v20140602-0749</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.uml2</groupId>
+      <artifactId>uml</artifactId>
+      <version>5.0.0.v20140602-0749</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>common</artifactId>
+      <version>2.10.1.v20140901-1043</version>
+    </dependency>
   </dependencies>
 </project>
