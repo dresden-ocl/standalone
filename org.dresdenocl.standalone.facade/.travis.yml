@@ -16,7 +16,7 @@ addons:
   coverity_scan:
     project:
       name: dresden-ocl/standalone
-      version: 3.4.0
+      version: 3.4.1
     notification_email: dev@larsschuetze.de
     build_command_prepend: cov-configure --java
     build_command: mvn install -Dmaven.test.skip=true -DskipTests -B
