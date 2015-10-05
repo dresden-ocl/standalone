@@ -37,7 +37,7 @@ before_install:
 install: /bin/true
 
 script:
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then mvn install -DskipTests -Dmaven.javadoc.skip=true -B -V ; fi
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then mvn -Xinstall -DskipTests -Dmaven.javadoc.skip=true -B -V ; fi
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then
     mvn deploy -DskipTests -Dmaven.javadoc.skip=true -DuniqueVersion=false -Dpackaging=jar -DgeneratePom=false; fi
