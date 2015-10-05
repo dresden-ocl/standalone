@@ -2,10 +2,17 @@
   <modelVersion>4.0.0</modelVersion>
   <name>Maven Default Project</name>
 
+  <parent>
+    <relativePath>../pom.xml</relativePath>
+    <groupId>org.dresdenocl</groupId>
+    <artifactId>org.dresdenocl</artifactId>
+    <version>3.4.1-SNAPSHOT</version>
+  </parent>
+  
+
   <groupId>org.dresdenocl</groupId>
   <artifactId>org.dresdenocl.standalone</artifactId>
   <version>3.4.1-SNAPSHOT</version>
-
   <packaging>jar</packaging>
 
   <properties>
