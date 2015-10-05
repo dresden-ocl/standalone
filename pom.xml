@@ -36,5 +36,11 @@
 		      </extension>
 		 </extensions>
 	</build>
-
+	<repositories>
+	  <repository>
+	    <id>Codehaus Mojo</id>
+	    <name>Codehaus Mojo</name>
+	    <url>https://oss.sonatype.org/content/repositories/codehaus-snapshots/</url>
+	  </repository>
+	</repositories>
 </project>
