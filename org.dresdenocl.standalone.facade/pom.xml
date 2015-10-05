@@ -4,16 +4,25 @@
 
   <groupId>org.dresdenocl</groupId>
   <artifactId>org.dresdenocl.standalone</artifactId>
-  <version>3.4.0-SNAPSHOT</version>
+  <version>3.4.1-SNAPSHOT</version>
 
   <packaging>jar</packaging>
 
   <properties>
-    <dresdenocl.version>3.4.0-SNAPSHOT</dresdenocl.version>
+    <dresdenocl.version>3.4.1-SNAPSHOT</dresdenocl.version>
     <project.build.sourceEncoding>cp1252</project.build.sourceEncoding>
   </properties>
 
   <repositories>
+    
+    <repository>
+      <id>dresden-ocl</id>
+      <url>http://dresdenocl.azurewebsites.net</url>
+      <snapshots>
+          <enabled>true</enabled>
+          <updatePolicy>XXX</updatePolicy>
+    </snapshots>
+    </repository>
     <repository>
       <id>central</id>
       <name>Maven Repository Switchboard</name>
