@@ -1,4 +1,5 @@
 bin/
 .DS_Store
 target/
-org.dresdenocl.standalone.example	/
+org.dresdenocl.standalone.example/lib/
+org.dresdenocl.standalone.example/plugins/
