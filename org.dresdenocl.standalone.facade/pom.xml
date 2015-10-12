@@ -100,6 +100,21 @@
           <target>1.6</target>
         </configuration>
       </plugin>
+      <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>${artifactId}-${version}-dependencies</finalName>
+				</configuration>
+			</plugin>
     </plugins>
   </build>
 
