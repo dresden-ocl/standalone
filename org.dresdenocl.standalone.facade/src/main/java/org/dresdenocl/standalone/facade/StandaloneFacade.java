@@ -87,7 +87,8 @@ import org.dresdenocl.tools.transformation.pivot2sql.impl.Pivot2MappedModelImpl;
  * <li>configure the logging for the different components of DresdenOCL by
  * calling {@link #initialize(URL)} with an {@link URL} pointing to
  * log4j.properties</li>
- * <li>load models ({@link #loadUMLModel(File)}, {@link #loadEcoreModel(File)})</li>
+ * <li>load models ({@link #loadUMLModel(File)}, {@link #loadEcoreModel(File)})
+ * </li>
  * <li>parse OCL constraints that are listed in a file (
  * {@link #parseOclConstraints(IModel, File)},
  * {@link #parseOclConstraints(IModel, URI)})</li>
@@ -111,7 +112,8 @@ public class StandaloneFacade {
 	private boolean registeredUMLMetamodel = false;
 	private boolean registeredEcoreMetamodel = false;
 
-	private IMetamodelRegistry standaloneMetamodelRegistry = new StandaloneMetamodelRegistry();
+	private IMetamodelRegistry standaloneMetamodelRegistry =
+			new StandaloneMetamodelRegistry();
 
 	private IModelInstanceProvider javaModelInstanceProvider;
 	private IModelInstanceProvider ecoreModelInstanceProvider;
@@ -149,55 +151,57 @@ public class StandaloneFacade {
 	 * </p>
 	 * 
 	 * @param loggerPropertiesUrl
-	 *            the {@link URL} of log4j.properties or <code>null</code> if
-	 *            you don't want to log
+	 *          the {@link URL} of log4j.properties or <code>null</code> if you
+	 *          don't want to log
 	 * @throws TemplateException
 	 */
 	public void initialize(URL loggerPropertiesUrl) throws TemplateException {
 
 		if (!initialized) {
 			/*
-			 * This little hack allows us to access these plug-ins even if there
-			 * is no Eclipse to instantiate them.
+			 * This little hack allows us to access these plug-ins even if there is no
+			 * Eclipse to instantiate them.
 			 */
 			new LoggingPlugin(loggerPropertiesUrl);
 			new EssentialOclPlugin();
 			new TemplatePlugin();
 			new TransformationPlugin();
 
-			EssentialOclPlugin
-					.setOclLibraryProvider(new StandaloneOclLibraryProvider(
-							StandaloneFacade.class
-									.getResourceAsStream("/resources/oclstandardlibrary.types")));
+			EssentialOclPlugin.setOclLibraryProvider(
+					new StandaloneOclLibraryProvider(StandaloneFacade.class
+							.getResourceAsStream("/resources/oclstandardlibrary.types")));
 
 			// only needed for code generation
-			final StringTemplateEngine stringTemplateEngine = new StringTemplateEngine();
+			final StringTemplateEngine stringTemplateEngine =
+					new StringTemplateEngine();
 
-			ITemplateEngineRegistry templateEngineRegistry = new StandaloneTemplateEngineRegistry();
+			ITemplateEngineRegistry templateEngineRegistry =
+					new StandaloneTemplateEngineRegistry();
 			templateEngineRegistry.addTemplateEngine(stringTemplateEngine);
 
-			ITemplateGroupRegistry templateGroupRegistry = new StandaloneTemplateGroupRegistry();
+			ITemplateGroupRegistry templateGroupRegistry =
+					new StandaloneTemplateGroupRegistry();
 			templateGroupRegistry.addTemplateGroup(new TemplateGroup(
-					stringTemplateEngine.getDisplayName(), null,
-					stringTemplateEngine));
+					stringTemplateEngine.getDisplayName(), null, stringTemplateEngine));
 
 			TemplatePlugin.setTempateEngineRegistry(templateEngineRegistry);
 			TemplatePlugin.setTempateGroupRegistry(templateGroupRegistry);
 
 			SQLTemplate.loadTemplates();
 
-			ITransformationRegistry transformationRegistry = new StandaloneTransformationRegistry();
-			TransformationPlugin
-					.setTransformationRegistry(transformationRegistry);
-			transformationRegistry.addTransformation(new Pivot2MappedModelImpl(
-					null, null));
-			transformationRegistry.addTransformation(new Pivot2CwmImpl(null,
-					null));
-			transformationRegistry.addTransformation(new Pivot2Ddl(null, null));
-			transformationRegistry
-					.addTransformation(new Cwm2DdlImpl(null, null));
-			transformationRegistry
-					.addTransformation(new Pivot2DdlAndMappedModel(null, null));
+			// ITransformationRegistry transformationRegistry = new
+			// StandaloneTransformationRegistry();
+			// TransformationPlugin
+			// .setTransformationRegistry(transformationRegistry);
+			// transformationRegistry.addTransformation(new Pivot2MappedModelImpl(
+			// null, null));
+			// transformationRegistry.addTransformation(new Pivot2CwmImpl(null,
+			// null));
+			// transformationRegistry.addTransformation(new Pivot2Ddl(null, null));
+			// transformationRegistry
+			// .addTransformation(new Cwm2DdlImpl(null, null));
+			// transformationRegistry
+			// .addTransformation(new Pivot2DdlAndMappedModel(null, null));
 
 			// needed for parsing (static semantics analysis)
 			OclReferenceResolveHelperProvider
@@ -216,16 +220,15 @@ public class StandaloneFacade {
 	 * Loads a UML model from the given file.
 	 * 
 	 * @param modelFile
-	 *            the UML model
+	 *          the UML model
 	 * @param umlResources
-	 *            points to the jar file of the plug-in
-	 *            <code>org.eclipse.uml2.uml.resources</code>; this is necessary
-	 *            in order to use primitive types like String and Integer in UML
-	 *            models
+	 *          points to the jar file of the plug-in
+	 *          <code>org.eclipse.uml2.uml.resources</code>; this is necessary in
+	 *          order to use primitive types like String and Integer in UML models
 	 * @return an adapted UML model that can be used for parsing OCL constraints
 	 *         and loading model instances
 	 * @throws ModelAccessException
-	 *             if something went wrong while loading the UML model
+	 *           if something went wrong while loading the UML model
 	 */
 	public IModel loadUMLModel(File modelFile, File umlResources)
 			throws ModelAccessException {
@@ -237,23 +240,18 @@ public class StandaloneFacade {
 					"Cannot laod an UML model with umlResources == null; umlResources has to point to the jar file of the plugin org.eclipse.uml2.uml.resources.");
 
 		if (!registeredUMLMetamodel) {
-			EPackage.Registry.INSTANCE.put(UMLPackage.eNS_URI,
-					UMLPackage.eINSTANCE);
+			EPackage.Registry.INSTANCE.put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap()
-					.put(UMLResource.FILE_EXTENSION,
-							UMLResourceFactoryImpl.INSTANCE);
+					.put(UMLResource.FILE_EXTENSION, UMLResourceFactoryImpl.INSTANCE);
 
-			URI pluginURI = URI.createURI("jar:file:"
-					+ umlResources.getAbsolutePath() + "!/");
-			URIConverter.URI_MAP.put(URI
-					.createURI(UMLResource.LIBRARIES_PATHMAP), pluginURI
-					.appendSegment("libraries").appendSegment(""));
-			URIConverter.URI_MAP.put(URI
-					.createURI(UMLResource.METAMODELS_PATHMAP), pluginURI
-					.appendSegment("metamodels").appendSegment(""));
-			URIConverter.URI_MAP.put(URI
-					.createURI(UMLResource.PROFILES_PATHMAP), pluginURI
-					.appendSegment("profiles").appendSegment(""));
+			URI pluginURI =
+					URI.createURI("jar:file:" + umlResources.getAbsolutePath() + "!/");
+			URIConverter.URI_MAP.put(URI.createURI(UMLResource.LIBRARIES_PATHMAP),
+					pluginURI.appendSegment("libraries").appendSegment(""));
+			URIConverter.URI_MAP.put(URI.createURI(UMLResource.METAMODELS_PATHMAP),
+					pluginURI.appendSegment("metamodels").appendSegment(""));
+			URIConverter.URI_MAP.put(URI.createURI(UMLResource.PROFILES_PATHMAP),
+					pluginURI.appendSegment("profiles").appendSegment(""));
 
 			registeredUMLMetamodel = true;
 		}
@@ -270,11 +268,11 @@ public class StandaloneFacade {
 	 * Loads an Ecore model from a given file.
 	 * 
 	 * @param modelFile
-	 *            the Ecore model
-	 * @return an adapted Ecore model that can be used for parsing OCL
-	 *         constraints and loading model instances
+	 *          the Ecore model
+	 * @return an adapted Ecore model that can be used for parsing OCL constraints
+	 *         and loading model instances
 	 * @throws ModelAccessException
-	 *             if something went wrong while loading the Ecore model
+	 *           if something went wrong while loading the Ecore model
 	 */
 	public IModel loadEcoreModel(File modelFile) throws ModelAccessException {
 
@@ -294,11 +292,11 @@ public class StandaloneFacade {
 	 * Loads a Java model from a given .class file.
 	 * 
 	 * @param classFile
-	 *            the .class file
-	 * @return an adapted Java model that can be used for parsing OCL
-	 *         constraints and loading model instances
+	 *          the .class file
+	 * @return an adapted Java model that can be used for parsing OCL constraints
+	 *         and loading model instances
 	 * @throws ModelAccessException
-	 *             if something went wrong while loading the Java model
+	 *           if something went wrong while loading the Java model
 	 */
 	public IModel loadJavaModel(File classFile) throws ModelAccessException {
 
@@ -316,11 +314,11 @@ public class StandaloneFacade {
 	 * Loads an XSD file.
 	 * 
 	 * @param xsdFile
-	 *            an .xsd file
-	 * @return the adapted XSD model that can be used for parsing OCL
-	 *         constraints and loading model instances
+	 *          an .xsd file
+	 * @return the adapted XSD model that can be used for parsing OCL constraints
+	 *         and loading model instances
 	 * @throws ModelAccessException
-	 *             if something went wrong while loading the XSD model
+	 *           if something went wrong while loading the XSD model
 	 */
 	public IModel loadXSDModel(File xsdFile) throws ModelAccessException {
 
@@ -342,20 +340,20 @@ public class StandaloneFacade {
 	 * {@link Constraint}s that can be used for interpretation.
 	 * 
 	 * @param model
-	 *            the model the constraints are defined on
+	 *          the model the constraints are defined on
 	 * @param oclFile
-	 *            the file containing the OCL constraints
+	 *          the file containing the OCL constraints
 	 * @return a lit of {@link Constraint}s
 	 * @throws IOException
 	 * @throws ParseException
-	 *             if something went wrong during parsing
+	 *           if something went wrong during parsing
 	 */
 	public List<Constraint> parseOclConstraints(IModel model, File oclFile)
 			throws IOException, ParseException {
 
 		if (!oclFile.exists())
-			throw new FileNotFoundException("Cannot find file "
-					+ oclFile.getCanonicalPath() + ".");
+			throw new FileNotFoundException(
+					"Cannot find file " + oclFile.getCanonicalPath() + ".");
 
 		return Ocl22Parser.INSTANCE.doParse(model,
 				URI.createFileURI(oclFile.getCanonicalPath()));
@@ -366,12 +364,12 @@ public class StandaloneFacade {
 	 * {@link Constraint}s that can be used for interpretation.
 	 * 
 	 * @param model
-	 *            the model the constraints are defined on
+	 *          the model the constraints are defined on
 	 * @param uri
-	 *            the {@link URI} of the OCL constraints
+	 *          the {@link URI} of the OCL constraints
 	 * @return a lit of {@link Constraint}s
 	 * @throws ParseException
-	 *             if something went wrong during parsing
+	 *           if something went wrong during parsing
 	 */
 	public List<Constraint> parseOclConstraints(IModel model, URI uri)
 			throws ParseException {
@@ -383,22 +381,21 @@ public class StandaloneFacade {
 	 * Load a Java model instance for a given model.
 	 * 
 	 * @param model
-	 *            the model of the model instance
+	 *          the model of the model instance
 	 * @param modelInstanceFile
-	 *            should point to a .class file, otherwise a
-	 *            {@link ModelAccessException} is thrown
-	 * @return the adapted Java model instance that can be used for
-	 *         interpretation
+	 *          should point to a .class file, otherwise a
+	 *          {@link ModelAccessException} is thrown
+	 * @return the adapted Java model instance that can be used for interpretation
 	 * @throws ModelAccessException
-	 *             if something went wrong during loading the model instance
+	 *           if something went wrong during loading the model instance
 	 */
 	public IModelInstance loadJavaModelInstance(IModel model,
 			File modelInstanceFile) throws ModelAccessException {
 
 		initJavaModelInstanceProvider();
 
-		IModelInstance modelInstance = javaModelInstanceProvider
-				.getModelInstance(modelInstanceFile, model);
+		IModelInstance modelInstance =
+				javaModelInstanceProvider.getModelInstance(modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -407,21 +404,21 @@ public class StandaloneFacade {
 	 * Load a Ecore model instance for a given model.
 	 * 
 	 * @param model
-	 *            the model of the model instance
+	 *          the model of the model instance
 	 * @param modelInstanceFile
-	 *            this can be an .xmi file or a more specific file ending
+	 *          this can be an .xmi file or a more specific file ending
 	 * @return the adapted Ecore model instance that can be used for
 	 *         interpretation
 	 * @throws ModelAccessException
-	 *             if something went wrong during loading the model instance
+	 *           if something went wrong during loading the model instance
 	 */
 	public IModelInstance loadEcoreModelInstance(IModel model,
 			File modelInstanceFile) throws ModelAccessException {
 
 		initEcoreModelInstanceProvider();
 
-		IModelInstance modelInstance = ecoreModelInstanceProvider
-				.getModelInstance(modelInstanceFile, model);
+		IModelInstance modelInstance =
+				ecoreModelInstanceProvider.getModelInstance(modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -430,21 +427,20 @@ public class StandaloneFacade {
 	 * Loads an XML model instance for a given model.
 	 * 
 	 * @param model
-	 *            the model for the model instance
+	 *          the model for the model instance
 	 * @param modelInstanceFile
-	 *            an .xml file
-	 * @return the adapted XML model instance that can be used for
-	 *         interpretation
+	 *          an .xml file
+	 * @return the adapted XML model instance that can be used for interpretation
 	 * @throws ModelAccessException
-	 *             if something went wrong during loading the model instance
+	 *           if something went wrong during loading the model instance
 	 */
 	public IModelInstance loadXMLModelInstance(IModel model,
 			File modelInstanceFile) throws ModelAccessException {
 
 		initXMLModelInstanceProvider();
 
-		IModelInstance modelInstance = xmlModelInstanceProvider
-				.getModelInstance(modelInstanceFile, model);
+		IModelInstance modelInstance =
+				xmlModelInstanceProvider.getModelInstance(modelInstanceFile, model);
 
 		return modelInstance;
 	}
@@ -454,9 +450,9 @@ public class StandaloneFacade {
 	 * on the given model instance.
 	 * 
 	 * @param modelInstance
-	 *            the model instance to interpret the OCL constraints on
+	 *          the model instance to interpret the OCL constraints on
 	 * @param constraintList
-	 *            all constraints that should be checked
+	 *          all constraints that should be checked
 	 * @return a list of {@link IInterpretationResult}s
 	 */
 	public List<IInterpretationResult> interpretEverything(
@@ -464,15 +460,16 @@ public class StandaloneFacade {
 
 		initInterpreterPlugin();
 
-		List<IInterpretationResult> resultList = new LinkedList<IInterpretationResult>();
+		List<IInterpretationResult> resultList =
+				new LinkedList<IInterpretationResult>();
 
 		IOclInterpreter interpreter = new OclInterpreter(modelInstance);
 
 		for (IModelInstanceObject imiObject : modelInstance
 				.getAllModelInstanceObjects()) {
 			for (Constraint constraint : constraintList) {
-				IInterpretationResult result = interpreter.interpretConstraint(
-						constraint, imiObject);
+				IInterpretationResult result =
+						interpreter.interpretConstraint(constraint, imiObject);
 				if (result != null)
 					resultList.add(result);
 			}
@@ -485,13 +482,13 @@ public class StandaloneFacade {
 	 * Generates AspectJ code for the given constraints.
 	 * 
 	 * @param constraints
-	 *            the constraints for which AspectJ code should be created
+	 *          the constraints for which AspectJ code should be created
 	 * @param settings
-	 *            the {@link IOcl2JavaSettings} containing at least a directory
-	 *            into which the code should be generated
+	 *          the {@link IOcl2JavaSettings} containing at least a directory into
+	 *          which the code should be generated
 	 * @throws Ocl2CodeException
-	 *             if the {@link IOcl2JavaSettings} were not set properly or
-	 *             something went wrong during code generation
+	 *           if the {@link IOcl2JavaSettings} were not set properly or
+	 *           something went wrong during code generation
 	 */
 	public void generateAspectJCode(List<Constraint> constraints,
 			IOcl2JavaSettings settings) throws Ocl2CodeException {
@@ -506,8 +503,8 @@ public class StandaloneFacade {
 		settings.setSaveCode(1);
 
 		if (javaCodeGenerator == null) {
-			javaCodeGenerator = Ocl2JavaFactory.getInstance()
-					.createJavaCodeGenerator();
+			javaCodeGenerator =
+					Ocl2JavaFactory.getInstance().createJavaCodeGenerator();
 		}
 		// no else.
 
@@ -519,22 +516,21 @@ public class StandaloneFacade {
 	}
 
 	/**
-	 * Generates Java code for the given constraints. Please not that this
-	 * method will only generate the Java code for a given OCL expression and
-	 * will not generate code required to instrument such code within a
-	 * constrained Java class. If you want to generated instrumentation code,
-	 * use the method
+	 * Generates Java code for the given constraints. Please not that this method
+	 * will only generate the Java code for a given OCL expression and will not
+	 * generate code required to instrument such code within a constrained Java
+	 * class. If you want to generated instrumentation code, use the method
 	 * {@link StandaloneFacade#generateAspectJCode(List, IOcl2JavaSettings)}
 	 * instead.
 	 * 
 	 * @param constraints
-	 *            the constraints for which Java code should be created
+	 *          the constraints for which Java code should be created
 	 * @param settings
-	 *            the {@link IOcl2JavaSettings} containing at least a directory
-	 *            into which the code should be generated
+	 *          the {@link IOcl2JavaSettings} containing at least a directory into
+	 *          which the code should be generated
 	 * @throws Ocl2CodeException
-	 *             if the {@link IOcl2JavaSettings} were not set properly or
-	 *             something went wrong during code generation
+	 *           if the {@link IOcl2JavaSettings} were not set properly or
+	 *           something went wrong during code generation
 	 * @return A {@link List} of {@link String} containing the generated Java
 	 *         code.
 	 */
@@ -548,8 +544,8 @@ public class StandaloneFacade {
 		settings.setSaveCode(0);
 
 		if (javaCodeGenerator == null) {
-			javaCodeGenerator = Ocl2JavaFactory.getInstance()
-					.createJavaCodeGenerator();
+			javaCodeGenerator =
+					Ocl2JavaFactory.getInstance().createJavaCodeGenerator();
 		}
 		// no else.
 
@@ -560,26 +556,26 @@ public class StandaloneFacade {
 
 	/**
 	 * <p>
-	 * Generates the SQL code for a given {@link List} of {@link Constraint} s
-	 * and a given {@link IOcl2DeclSettings}.
+	 * Generates the SQL code for a given {@link List} of {@link Constraint} s and
+	 * a given {@link IOcl2DeclSettings}.
 	 * </p>
 	 * 
 	 * @param constraints
-	 *            The {@link Constraint}s used for code generation.
+	 *          The {@link Constraint}s used for code generation.
 	 * @param settings
-	 *            The {@link IOcl2DeclSettings} used for code generation (can be
-	 *            <code>null</code> if default settings shall be used).
+	 *          The {@link IOcl2DeclSettings} used for code generation (can be
+	 *          <code>null</code> if default settings shall be used).
 	 * @param model
-	 *            The {@link IModel} for code generation
+	 *          The {@link IModel} for code generation
 	 * @return The generated SQL code as a set of {@link String}s.
 	 * @throws IllegalArgumentException
-	 *             Thrown if the {@link List} of {@link Constraint}s is empty or
-	 *             <code>null</code>.
+	 *           Thrown if the {@link List} of {@link Constraint}s is empty or
+	 *           <code>null</code>.
 	 * @throws Ocl2CodeException
 	 */
 	public List<String> generateSQLCode(List<Constraint> constraints,
 			IOcl2DeclSettings settings, IModel model)
-			throws IllegalArgumentException, Ocl2CodeException {
+					throws IllegalArgumentException, Ocl2CodeException {
 
 		if (constraints == null || constraints.size() == 0) {
 			throw new IllegalArgumentException(
@@ -588,14 +584,12 @@ public class StandaloneFacade {
 		// no else.
 
 		if (settings == null) {
-			throw new IllegalArgumentException(
-					"IOcl2DeclSettings cannot be null.");
+			throw new IllegalArgumentException("IOcl2DeclSettings cannot be null.");
 		}
 		// no else.
 
 		if (sqlCodeGenerator == null) {
-			sqlCodeGenerator = Ocl2SQLFactory.getInstance()
-					.createSQLCodeGenerator();
+			sqlCodeGenerator = Ocl2SQLFactory.getInstance().createSQLCodeGenerator();
 		}
 		// no else.
 
@@ -610,12 +604,13 @@ public class StandaloneFacade {
 	 * {@link Constraint}.
 	 * 
 	 * @param constraint
-	 *            The {@link Constraint} for which the {@link Metric} object
-	 *            shall be computed.
+	 *          The {@link Constraint} for which the {@link Metric} object shall
+	 *          be computed.
 	 * @return A {@link Metric} object containing metrics for the given
 	 *         {@link Constraint}.
 	 */
 	public static Metric getMetrics(Constraint constraint) {
+
 		return OclMetrics.computeMetric(constraint);
 	}
 
@@ -624,21 +619,21 @@ public class StandaloneFacade {
 	 * {@link Constraint}.
 	 * 
 	 * @param constraint
-	 *            The {@link Constraint} for which the {@link Metric} object
-	 *            shall be computed.
+	 *          The {@link Constraint} for which the {@link Metric} object shall
+	 *          be computed.
 	 * @return A {@link Metric} object containing metrics for the given
 	 *         {@link Constraint}.
 	 */
 	public static Metric getMetrics(IModel model) {
+
 		try {
 			return OclMetrics.computeMetric(model.getConstraints());
 		} catch (ModelAccessException e) {
 			throw new IllegalStateException(
-					"Exception during computation of metric for the given model.",
-					e);
+					"Exception during computation of metric for the given model.", e);
 		}
 	}
-	
+
 	private void initInterpreterPlugin() {
 
 		if (!initInterpreterPlugin)
@@ -683,8 +678,8 @@ public class StandaloneFacade {
 		if (!registeredEcoreMetamodel)
 			EPackage.Registry.INSTANCE.put(EcorePackage.eNS_URI,
 					EcorePackage.eINSTANCE);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-				"ecore", new EcoreResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore",
+				new EcoreResourceFactoryImpl());
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*",
 				new XMIResourceFactoryImpl());
 

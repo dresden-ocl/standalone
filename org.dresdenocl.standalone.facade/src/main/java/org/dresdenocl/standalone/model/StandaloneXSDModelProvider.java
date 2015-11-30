@@ -16,8 +16,8 @@ import org.dresdenocl.model.ModelAccessException;
 import org.dresdenocl.model.base.AbstractModelProvider;
 import org.dresdenocl.standalone.facade.StandaloneFacade;
 
-public class StandaloneXSDModelProvider extends AbstractModelProvider implements
-		IModelProvider {
+public class StandaloneXSDModelProvider extends AbstractModelProvider
+		implements IModelProvider {
 
 	// Logger for this class
 	private static final Logger logger =
@@ -55,10 +55,9 @@ public class StandaloneXSDModelProvider extends AbstractModelProvider implements
 			resource = getResourceSet().createResource(modelURI);
 		}
 
-		model =
-				new XSDModel(getResourceSet().getResource(modelURI, false),
-						StandaloneFacade.INSTANCE.getStandaloneMetamodelRegistry()
-								.getMetamodel(XSDMetamodelPlugin.ID));
+		model = new XSDModel(getResourceSet().getResource(modelURI, false),
+				StandaloneFacade.INSTANCE.getStandaloneMetamodelRegistry()
+						.getMetamodel(XSDMetamodelPlugin.ID));
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("getModel() - exit - return value=" + model); //$NON-NLS-1$

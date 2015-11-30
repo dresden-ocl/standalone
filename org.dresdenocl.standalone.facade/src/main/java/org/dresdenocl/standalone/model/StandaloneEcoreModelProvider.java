@@ -62,10 +62,9 @@ public class StandaloneEcoreModelProvider extends AbstractModelProvider
 		// no else.
 
 		/* Create the model from the resource. */
-		model =
-				new EcoreModel(getResourceSet().getResource(modelURI, false),
-						StandaloneFacade.INSTANCE.getStandaloneMetamodelRegistry()
-								.getMetamodel(EcoreMetamodelPlugin.ID));
+		model = new EcoreModel(getResourceSet().getResource(modelURI, false),
+				StandaloneFacade.INSTANCE.getStandaloneMetamodelRegistry()
+						.getMetamodel(EcoreMetamodelPlugin.ID));
 
 		/* Eventually log the exit from this method. */
 		if (LOGGER.isDebugEnabled()) {

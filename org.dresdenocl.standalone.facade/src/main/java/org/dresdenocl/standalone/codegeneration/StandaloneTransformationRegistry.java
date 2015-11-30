@@ -23,12 +23,12 @@ import org.dresdenocl.tools.transformation.event.ITransformationRegistryListener
  * @author Bjšrn Freitag
  *
  */
-public class StandaloneTransformationRegistry implements
-		ITransformationRegistry {
+public class StandaloneTransformationRegistry
+		implements ITransformationRegistry {
 
 	/** {@link Logger} for this class. */
-	private static final Logger LOGGER = TransformationPlugin
-			.getLogger(StandaloneTransformationRegistry.class);
+	private static final Logger LOGGER =
+			TransformationPlugin.getLogger(StandaloneTransformationRegistry.class);
 
 	/**
 	 * the map of template engines
@@ -59,8 +59,8 @@ public class StandaloneTransformationRegistry implements
 	public void addTransformation(ITransformation<?, ?, ?> transformation) {
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER
-					.debug("addTransformation(transformation=" + transformation + ") - enter"); //$NON-NLS-1$ //$NON-NLS-2$
+			LOGGER.debug(
+					"addTransformation(transformation=" + transformation + ") - enter"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		// no else.
 
@@ -76,8 +76,8 @@ public class StandaloneTransformationRegistry implements
 		 * this is better than silently do nothing.
 		 */
 		if (this.transformations.containsValue(transformation)) {
-			LOGGER
-					.warn("Transformation '" + transformation.getClass().getSimpleName() + "' is already loaded. The transformation will be replaced."); //$NON-NLS-1$//$NON-NLS-2$
+			LOGGER.warn("Transformation '" + transformation.getClass().getSimpleName() //$NON-NLS-1$
+					+ "' is already loaded. The transformation will be replaced."); //$NON-NLS-1$
 		}
 		// no else.
 
@@ -161,6 +161,7 @@ public class StandaloneTransformationRegistry implements
 	 */
 	public void removeTransformationRegistryListener(
 			ITransformationRegistryListener listener) {
+
 		throw new UnsupportedOperationException(
 				"Not allowed in Standalone version of Dresden OCL.");
 	}
@@ -170,24 +171,26 @@ public class StandaloneTransformationRegistry implements
 		return new LinkedList<String>(this.transformations.keySet());
 	}
 
-	public List<String> getTransformationList(Class<?> modelIn,
-			Class<?> modelOut, Class<?> settings) {
+	public List<String> getTransformationList(Class<?> modelIn, Class<?> modelOut,
+			Class<?> settings) {
 
 		List<String> itransList = new ArrayList<String>();
 		for (String s : this.transformations.keySet()) {
 			Class<?> clazz = this.transformations.get(s);
-			ParameterizedType superclass = ((ParameterizedType) clazz
-					.getGenericSuperclass());
+			ParameterizedType superclass =
+					((ParameterizedType) clazz.getGenericSuperclass());
 			Type[] types = superclass.getActualTypeArguments();
 			if (types[0].equals(modelIn)) {
 				if (types[1].equals(settings)) {
 					if (superclass.getRawType().equals(ParallelTransformation.class)) {
 						if (types[2].equals(modelOut)) {
 							itransList.add(s);
-						} else if (types[3].equals(modelOut)) {
+						}
+						else if (types[3].equals(modelOut)) {
 							itransList.add(s);
 						}
-					} else {
+					}
+					else {
 						if (types[types.length - 1].equals(modelOut)) {
 							itransList.add(s);
 						}

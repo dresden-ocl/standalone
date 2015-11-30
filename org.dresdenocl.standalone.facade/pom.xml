@@ -1,358 +1,343 @@
 <project>
-  <modelVersion>4.0.0</modelVersion>
-  <name>Maven Default Project</name>
+	<modelVersion>4.0.0</modelVersion>
+	<name>Maven Default Project</name>
 
-  <parent>
-    <relativePath>../pom.xml</relativePath>
-    <groupId>org.dresdenocl</groupId>
-    <artifactId>org.dresdenocl</artifactId>
-    <version>3.4.1-SNAPSHOT</version>
-  </parent>
-  
+	<parent>
+		<relativePath>../pom.xml</relativePath>
+		<groupId>org.dresdenocl</groupId>
+		<artifactId>org.dresdenocl</artifactId>
+		<version>3.4.1-SNAPSHOT</version>
+	</parent>
 
-  <groupId>org.dresdenocl</groupId>
-  <artifactId>org.dresdenocl.standalone</artifactId>
-  <version>3.4.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
-  <properties>
-    <dresdenocl.version>3.4.1-SNAPSHOT</dresdenocl.version>
-    <project.build.sourceEncoding>cp1252</project.build.sourceEncoding>
-  </properties>
-  
-  <repositories>
-    <repository>
-      <id>dresden-ocl</id>
-      <url>http://dresdenocl.azurewebsites.net</url>
-      <snapshots>
-          <enabled>true</enabled>
-          <updatePolicy>XXX</updatePolicy>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>central</id>
-      <name>Maven Repository Switchboard</name>
-      <layout>default</layout>
-      <url>http://repo1.maven.org/maven2</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
+	<groupId>org.dresdenocl</groupId>
+	<artifactId>org.dresdenocl.standalone</artifactId>
+	<version>3.4.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-    <repository>
-      <id>sonatype-nexus-releases</id>
-      <name>Sonatype Nexus Releases</name>
-      <url>https://oss.sonatype.org/content/repositories/releases/</url>
-    </repository>
+	<properties>
+		<dresdenocl.version>3.4.1-SNAPSHOT</dresdenocl.version>
+		<project.build.sourceEncoding>cp1252</project.build.sourceEncoding>
+	</properties>
 
-    <repository>
-      <id>repo</id>
-      <releases>
-        <enabled>true</enabled>
-          <checksumPolicy>ignore</checksumPolicy>
-      </releases>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <url>${project.baseUri}repo</url>
-    </repository>
-  </repositories>
+	<repositories>
+		<repository>
+			<id>dresden-ocl</id>
+			<url>http://dresdenocl.azurewebsites.net</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>XXX</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<layout>default</layout>
+			<url>http://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>central</id>
-      <name>Maven Plugin Repository</name>
-      <url>http://repo1.maven.org/maven2</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
+		<repository>
+			<id>sonatype-nexus-releases</id>
+			<name>Sonatype Nexus Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases/</url>
+		</repository>
 
-  <build>
-    <directory>target</directory>
-    <outputDirectory>target/classes</outputDirectory>
-    <finalName>${project.artifactId}-${project.version}</finalName>
-    <testOutputDirectory>target/test-classes</testOutputDirectory>
-    <sourceDirectory>src/main/java</sourceDirectory>
-    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
-    <testSourceDirectory>src/test/java</testSourceDirectory>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-      </resource>
-    </resources>
-    <testResources>
-      <testResource>
-        <directory>src/test/resources</directory>
-      </testResource>
-    </testResources>
+		<repository>
+			<id>repo</id>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<url>${project.baseUri}repo</url>
+		</repository>
+	</repositories>
 
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-      <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-release-plugin</artifactId>
-	<version>2.4</version>
-      </plugin>
-      <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-javadoc-plugin</artifactId>
-	<version>2.9</version>
-	<executions>
-	 <execution>
-	  <id>attach-javadocs</id>
-	  <goals>
-	   <goal>jar</goal>
-	  </goals>
-	 </execution>
-	</executions>
-      </plugin> 
-      <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-source-plugin</artifactId>
-	<version>2.2.1</version>
-	<executions>
-	 <execution>
-	  <id>attach-sources</id>
-	  <goals>
-	   <goal>jar</goal>
-	  </goals>
- 	 </execution>
-	</executions>
-       </plugin>
-       <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-shade-plugin</artifactId>
-	<executions>
-	 <execution>
-	  <phase>package</phase>
-	   <goals>
-	    <goal>shade</goal>
- 	   </goals>
-	 </execution>
-	</executions>
-	<configuration>
-	 <finalName>${artifactId}-${version}-dependencies</finalName>
-	</configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>Maven Plugin Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
-  <dependencies>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-    </dependency>
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.transformation</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>2.9</version> <executions> <execution> <id>attach-javadocs</id> 
+				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
+				<version>2.2.1</version> <executions> <execution> <id>attach-sources</id> 
+				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>${artifactId}-${version}-dependencies</finalName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.metamodels.ecore</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.model</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.transformation</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.metamodels.java</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.metamodels.ecore</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.metamodels.uml2</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.model</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.metamodels.xsd</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.metamodels.java</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.metrics</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.metamodels.uml2</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.logging</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.metamodels.xsd</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.essentialocl</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>  
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.metrics</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.interpreter</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>  
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.logging</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.language.ocl.resource.ocl</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency> 
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.essentialocl</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.language.ocl.staticsemantics</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency> 
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.interpreter</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.modelinstance</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency> 
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.language.ocl.resource.ocl</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.modelinstancetype.ecore</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.language.ocl.staticsemantics</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.modelinstancetype.java</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency> 
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.modelinstance</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.modelinstancetype</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.modelinstancetype.ecore</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.modelinstancetype.xml</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.modelinstancetype.java</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.parser</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.modelinstancetype</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.pivotmodel</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.modelinstancetype.xml</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.codegen</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.parser</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.codegen.declarativ</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.pivotmodel</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.codegen.declarativ.ocl2sql</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.codegen</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.codegen.ocl2java</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>   
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.codegen.declarativ</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.template</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency> 
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.codegen.declarativ.ocl2sql</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.template.sql</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency> 
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.codegen.ocl2java</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.dresdenocl</groupId>
-      <artifactId>org.dresdenocl.tools.transformation.pivot2sql</artifactId>
-      <version>${dresdenocl.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.template</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <!-- local dependencies -->
-    <dependency>
-      <groupId>org.eclipse.core</groupId>
-      <artifactId>runtime</artifactId>
-      <version>3.10.0.v20140318-2214</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.template.sql</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.eclipse.emf</groupId>
-      <artifactId>ecore</artifactId>
-      <version>2.10.1.v20140901-1043</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.tools.transformation.pivot2sql</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.eclipse.emf.ecore</groupId>
-      <artifactId>xmi</artifactId>
-      <version>2.10.1.v20140901-1043</version>
-    </dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.essentialocl.standardlibrary</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
+		<!-- local dependencies -->
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>runtime</artifactId>
+			<version>3.10.0.v20140318-2214</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.eclipse.uml2</groupId>
-      <artifactId>common</artifactId>
-      <version>2.0.0.v20140602-0749</version>
-    </dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>ecore</artifactId>
+			<version>2.10.1.v20140901-1043</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.eclipse</groupId>
-      <artifactId>uml2</artifactId>
-      <version>5.0.0.v20140602-0749</version>
-    </dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.ecore</groupId>
+			<artifactId>xmi</artifactId>
+			<version>2.10.1.v20140901-1043</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.eclipse.uml2</groupId>
-      <artifactId>uml</artifactId>
-      <version>5.0.0.v20140602-0749</version>
-    </dependency>
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>common</artifactId>
+			<version>2.0.0.v20140602-0749</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.eclipse.emf</groupId>
-      <artifactId>common</artifactId>
-      <version>2.10.1.v20140901-1043</version>
-    </dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>uml2</artifactId>
+			<version>5.0.0.v20140602-0749</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>uml</artifactId>
+			<version>5.0.0.v20140602-0749</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>common</artifactId>
+			<version>2.10.1.v20140901-1043</version>
+		</dependency>
+	</dependencies>
 </project>

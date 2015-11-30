@@ -26,10 +26,8 @@ public class StandaloneJavaModelProvider extends JavaModelProvider {
 
 		IModel result;
 
-		result =
-				new JavaModel(modelClass, StandaloneFacade.INSTANCE
-						.getStandaloneMetamodelRegistry().getMetamodel(
-								JavaMetaModelPlugin.ID));
+		result = new JavaModel(modelClass, StandaloneFacade.INSTANCE
+				.getStandaloneMetamodelRegistry().getMetamodel(JavaMetaModelPlugin.ID));
 
 		/* Probably debug the exit of this method. */
 		if (LOGGER.isDebugEnabled()) {

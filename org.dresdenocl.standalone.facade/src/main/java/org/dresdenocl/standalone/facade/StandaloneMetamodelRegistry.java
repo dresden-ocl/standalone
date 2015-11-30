@@ -26,8 +26,7 @@ public class StandaloneMetamodelRegistry implements IMetamodelRegistry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * org.dresdenocl.modelbus.metamodel.IMetamodelRegistry#addMetamodel
+	 * @see org.dresdenocl.modelbus.metamodel.IMetamodelRegistry#addMetamodel
 	 * (org.dresdenocl.modelbus.metamodel.IMetamodel)
 	 */
 	public void addMetamodel(IMetamodel metamodel) {
@@ -46,8 +45,7 @@ public class StandaloneMetamodelRegistry implements IMetamodelRegistry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * org.dresdenocl.modelbus.metamodel.IMetamodelRegistry#getMetamodel
+	 * @see org.dresdenocl.modelbus.metamodel.IMetamodelRegistry#getMetamodel
 	 * (java.lang.String)
 	 */
 	public IMetamodel getMetamodel(String id) {
@@ -57,8 +55,7 @@ public class StandaloneMetamodelRegistry implements IMetamodelRegistry {
 
 	/*
 	 * (non-Javadoc)
-	 * @see
-	 * org.dresdenocl.modelbus.metamodel.IMetamodelRegistry#getMetamodels()
+	 * @see org.dresdenocl.modelbus.metamodel.IMetamodelRegistry#getMetamodels()
 	 */
 	public IMetamodel[] getMetamodels() {
 

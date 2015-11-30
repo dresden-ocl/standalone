@@ -77,10 +77,9 @@ public class StandaloneUML2ModelProvider extends AbstractModelProvider
 		}
 		// no else.
 
-		result =
-				new UML2Model(getResourceSet().getResource(modelURI, false),
-						StandaloneFacade.INSTANCE.getStandaloneMetamodelRegistry()
-								.getMetamodel(UML2MetamodelPlugin.ID));
+		result = new UML2Model(getResourceSet().getResource(modelURI, false),
+				StandaloneFacade.INSTANCE.getStandaloneMetamodelRegistry()
+						.getMetamodel(UML2MetamodelPlugin.ID));
 
 		/* Eventually debug the exit of this method. */
 		if (LOGGER.isDebugEnabled()) {
