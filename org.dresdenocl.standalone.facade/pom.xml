@@ -124,6 +124,14 @@
 				</executions>
 				<configuration>
 					<finalName>${artifactId}-${version}-dependencies</finalName>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>MANIFEST.MF</exclude>
+							</excludes>
+						</filter>
+					</filters>
 				</configuration>
 			</plugin>
 		</plugins>

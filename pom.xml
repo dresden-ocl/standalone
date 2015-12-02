@@ -17,30 +17,27 @@
 		<module>org.dresdenocl.standalone.facade</module>
 	</modules>
 	<distributionManagement>
-	    <repository>
-		  <id>ftp-repository</id>
-		  <url>ftp://dresdenocl\dresdenocl:${env.FTP_PASS}@waws-prod-db3-033.ftp.azurewebsites.windows.net/site/wwwroot</url>
-    		<snapshots>
-			  <enabled>false</enabled>
-    	       	</snapshots>
-    	       	<uniqueVersion>false</uniqueVersion>
-	    </repository>
+		<repository>
+			<id>ftp-repository</id>
+			<url>ftp://dresdenocl\dresdenocl:${env.FTP_PASS}@waws-prod-db3-033.ftp.azurewebsites.windows.net/site/wwwroot</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
 	</distributionManagement>
 
 	<build>
 		<extensions>
-		  <extension>
-		        <groupId>org.apache.maven.wagon</groupId>
-		         <artifactId>wagon-ftp</artifactId>
-		         <version>1.0-beta-6</version>
-		      </extension>
-		 </extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 	</build>
 	<repositories>
-	  <repository>
-	    <id>Codehaus Mojo</id>
-	    <name>Codehaus Mojo</name>
-	    <url>https://oss.sonatype.org/content/repositories/codehaus-snapshots/</url>
-	  </repository>
+		<repository>
+			<id>Codehaus Mojo</id>
+			<name>Codehaus Mojo</name>
+			<url>https://oss.sonatype.org/content/repositories/codehaus-snapshots/</url>
+		</repository>
 	</repositories>
 </project>
