@@ -358,7 +358,32 @@ public class StandaloneFacade {
 		return Ocl22Parser.INSTANCE.doParse(model,
 				URI.createFileURI(oclFile.getCanonicalPath()));
 	}
+	/**
+	 * Parses the OCL constraints in a given file and returns a list of
+	 * {@link Constraint}s that can be used for interpretation.
+	 * 
+	 * @param model
+	 *          the model the constraints are defined on
+	 * @param oclCode
+	 *          the String containing the OCL constraints
+	 * @return a lit of {@link Constraint}s
+	 * @throws IOException
+	 * @throws ParseException
+	 *           if something went wrong during parsing
+	 */
+	
+	public List<Constraint> parseOclConstraints(IModel model, String oclCode)
+			throws IOException, ParseException {
 
+		if (oclCode==null)
+			throw new NullPointerException();
+		
+		if (oclCode.isEmpty())
+			throw new NullPointerException(
+					"Cannot find ocl Contraint");
+
+		return Ocl22Parser.INSTANCE.parseOclString(oclCode,model);
+	}
 	/**
 	 * Parses the OCL constraints in a given URI and returns a list of
 	 * {@link Constraint}s that can be used for interpretation.
