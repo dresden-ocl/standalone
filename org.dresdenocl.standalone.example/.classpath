@@ -4,7 +4,6 @@
 	<classpathentry kind="lib" path="lib/org.dresdenocl.standalone-3.4.1-SNAPSHOT-dependencies.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.commons.lang_2.3.0.v200803061910.jar"/>
-	<classpathentry kind="lib" path="lib/org.dresdenocl.facade_3.4.1.201508240823.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.resources_3.6.0.v20100526-0737.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.runtime_3.6.0.v20100505.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.emf.common_2.11.0.v20150805-0538.jar"/>

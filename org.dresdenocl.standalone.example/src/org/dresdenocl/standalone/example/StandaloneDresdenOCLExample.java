@@ -1,4 +1,4 @@
-package tudresden.ocl20.pivot.standalone.example;
+package org.dresdenocl.standalone.example;
 
 import java.io.File;
 import java.net.URL;
