@@ -9,10 +9,7 @@
 		<version>3.4.1-SNAPSHOT</version>
 	</parent>
 
-
-	<groupId>org.dresdenocl</groupId>
 	<artifactId>org.dresdenocl.standalone</artifactId>
-	<version>3.4.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -43,19 +40,6 @@
 			<id>sonatype-nexus-releases</id>
 			<name>Sonatype Nexus Releases</name>
 			<url>https://oss.sonatype.org/content/repositories/releases/</url>
-		</repository>
-
-		<repository>
-			<id>repo</id>
-			<releases>
-				<enabled>true</enabled>
-				<checksumPolicy>ignore</checksumPolicy>
-			</releases>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<url>${project.baseUri}repo</url>
 		</repository>
 
 		<repository>
@@ -110,12 +94,27 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.4</version>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
-				<version>2.9</version> <executions> <execution> <id>attach-javadocs</id> 
-				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
-				<version>2.2.1</version> <executions> <execution> <id>attach-sources</id> 
-				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
+
+
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
+				<configuration> <archive> <manifest> <addClasspath>true</addClasspath> <classpathPrefix>lib</classpathPrefix> 
+				<mainClass>test.org.Cliente</mainClass> </manifest> <manifestEntries> <Class-Path>lib/</Class-Path> 
+				</manifestEntries> </archive> </configuration> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -366,46 +365,7 @@
 			<version>${dresdenocl.version}</version>
 		</dependency>
 
-
-		<!-- local dependencies -->
-		<!-- <dependency> <groupId>org.eclipse.core</groupId> <artifactId>runtime</artifactId> 
-			<version>3.10.0.v20140318-2214</version> </dependency> -->
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>ecore</artifactId>
-			<version>2.10.1.v20140901-1043</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.emf.ecore</groupId>
-			<artifactId>xmi</artifactId>
-			<version>2.10.1.v20140901-1043</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.uml2</groupId>
-			<artifactId>common</artifactId>
-			<version>2.0.0.v20140602-0749</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>uml2</artifactId>
-			<version>5.0.0.v20140602-0749</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.uml2</groupId>
-			<artifactId>uml</artifactId>
-			<version>5.0.0.v20140602-0749</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>common</artifactId>
-			<version>2.10.1.v20140901-1043</version>
-		</dependency>
-
+		<!-- emf text -->
 		<dependency>
 			<groupId>org.emftext.commons</groupId>
 			<artifactId>org.emftext.commons.layout</artifactId>
@@ -417,6 +377,91 @@
 			<artifactId>org.emftext.commons.antlr3_4_0</artifactId>
 			<version>3.4.0-20130528.130634-1</version>
 		</dependency>
+
+		<!-- maven -->
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>runtime</artifactId>
+			<version>3.10.0-v20140318-2214</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>resources</artifactId>
+			<version>3.3.0-v20070604</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.adedayo.eclipse.sdk</groupId>
+			<artifactId>org.eclipse.osgi.util</artifactId>
+			<version>3.3.100</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.xsd</groupId>
+			<artifactId>org.eclipse.xsd</artifactId>
+			<version>2.11.0-v20150806-0404</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.equinox</groupId>
+			<artifactId>org.eclipse.equinox.common</artifactId>
+			<version>3.6.0.v20100503</version>
+		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>ecore</artifactId>
+			<version>2.3.0-v200706262000</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.eclipse.emf.ecore</groupId>
+			<artifactId>xmi</artifactId>
+			<version>2.3.0-v200706262000</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>common</artifactId>
+			<version>2.3.0-v200706262000</version>
+		</dependency>
+
+
+		<!-- local dependencies -->
+		
+<!-- 		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>uml2</artifactId>
+			<version>5.0.0.v20140602-0749</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>common</artifactId>
+			<version>2.0.0.v20140602-0749</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>uml</artifactId>
+			<version>5.0.0.v20140602-0749</version>
+		</dependency>
+ -->
+
 
 	</dependencies>
 </project>
