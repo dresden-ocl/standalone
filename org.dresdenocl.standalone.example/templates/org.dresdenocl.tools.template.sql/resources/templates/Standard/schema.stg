@@ -1,0 +1,75 @@
+group sql;
+delimiters "$","$"
+
+typeMap ::= [
+        "Integer":"INT",
+        "Long":"BIGINT",
+        "Float":"FLOAT",
+        "Double":"DOUBLE",
+        "Boolean":"NUMBER(1)",
+        "Short":"INT",
+        "Char":"CHAR",
+        "String":"VARCHAR(255)",
+        "Date":"DATE",
+        default:"VARCHAR(255)"
+]
+
+createComment(comment) ::= <<
+-- $comment$
+>>
+
+createSubType(type) ::= <<
+type = "$type$"
+>>
+
+createType(type) ::= <<
+$typeMap.(type)$
+>>
+
+selectStmt(columns, tables, where) ::= <<
+SELECT $columns; separator=","$
+FROM $tables; separator=","$
+$if(where)$
+WHERE $where$$endif$
+>>
+
+createView(viewname, body) ::= <<
+CREATE VIEW $viewname$
+AS ( $body$ );
+>>
+
+createColumn(name, type) ::= <<
+$name$ $type$
+>>
+
+createName(schema,name) ::= <<
+$if(schema)$$schema$.$endif$$name$
+>>
+
+createTable(tablename, columns) ::= <<
+CREATE TABLE $tablename$ (
+$columns; separator=",\n"$
+);
+>>
+
+createPrimaryKeyConstraint(tablename, columnname,pkname) ::= <<
+ALTER TABLE $tablename$ ADD CONSTRAINT $pkname$
+PRIMARY KEY ($columnname; separator=", "$);
+>>
+
+createForeignKeyConstraint(tablename, columnname, pktablename,pkname) ::= <<
+ALTER TABLE $tablename$ ADD CONSTRAINT CON$tablename$$columnname; separator="_"$
+FOREIGN KEY ($columnname; separator=", "$) REFERENCES $pktablename$($pkname; separator=", "$);
+>>
+
+createProperty(tablename,columnname,asname) ::= <<
+$if(tablename)$$tablename$.$endif$$columnname$$if(asname)$ AS $columnname$$endif$
+>>
+
+check_database_array() ::= <<
+true
+>>
+
+check_database_array_field() ::= <<
+ ARRAY
+>>

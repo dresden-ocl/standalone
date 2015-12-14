@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_6pUsMMHhEd2UNuYhQ_ApoA" name="tudresden">
-  <packagedElement xmi:type="uml:Package" xmi:id="_AsKYYMHiEd2UNuYhQ_ApoA" name="ocl20">
-    <packagedElement xmi:type="uml:Package" xmi:id="_BlraUMHiEd2UNuYhQ_ApoA" name="pivot">
-      <packagedElement xmi:type="uml:Package" xmi:id="_Cff-QMHiEd2UNuYhQ_ApoA" name="examples">
-        <packagedElement xmi:type="uml:Package" xmi:id="_DmIPIMHiEd2UNuYhQ_ApoA" name="university_complex">
+
           <packagedElement xmi:type="uml:Class" xmi:id="_cjU9YDXHEd-_J9pP9Zsbaw" name="Grade">
             <ownedAttribute xmi:id="_ePVMMDXHEd-_J9pP9Zsbaw" name="name" visibility="private">
               <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -133,8 +130,5 @@
             <ownedEnd xmi:id="_3dLHMDeUEd-JXKTQMEgtig" name="headOfFacility" type="_J0lVcMHiEd2UNuYhQ_ApoA" association="_qkaFADeUEd-JXKTQMEgtig"/>
           </packagedElement>
           <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_hRZwELnfEd-wmYSW0rs3Tw" name="Date"/>
-        </packagedElement>
-      </packagedElement>
-    </packagedElement>
-  </packagedElement>
+
 </uml:Package>

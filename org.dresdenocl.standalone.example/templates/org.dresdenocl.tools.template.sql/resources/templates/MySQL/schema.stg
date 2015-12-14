@@ -1,0 +1,53 @@
+group mysql;
+delimiters "$","$"
+
+typeMap ::= [
+        "Integer":"INT",
+        "Long":"BIGINT",
+        "Float":"FLOAT",
+        "Double":"DOUBLE",
+        "Boolean":"BOOL",
+        "Short":"INT",
+        "Char":"CHAR",
+        "String":"VARCHAR(255)",
+        "Date":"DATE",
+        default:"VARCHAR (255)"
+]
+
+createType(type) ::= <<
+$typeMap.(type)$
+>>
+
+createView(viewname, body) ::= <<
+CREATE VIEW $viewname$
+AS ( $body$ );
+>>
+
+createColumn(name, type, primaryKey) ::= <<
+`$name$` $type$
+>>
+
+createName(schema,name) ::= <<
+$if(schema)$`$schema$`.$endif$`$name$`
+>>
+
+createTable(tablename, columns) ::= <<
+CREATE TABLE $tablename$ (
+$columns$
+) TYPE = InnoDB;
+>>
+
+createPrimaryKeyConstraint(tablename, columnname,pkname) ::= <<
+ALTER TABLE $tablename$ ADD CONSTRAINT `$pkname$`
+PRIMARY KEY (`$columnname; separator="`, `"$`);
+>>
+
+
+createForeignKeyConstraint(tablename, columnname, pktablename,pkname) ::= <<
+ALTER TABLE $tablename$ ADD CONSTRAINT `CON$tablename$$columnname; separator="_"$`
+FOREIGN KEY (`$columnname; separator="`, `"$`) REFERENCES $pktablename$(`$pkname; separator="`, `"$``);
+>>
+
+check_database_array() ::= <<
+false
+>>

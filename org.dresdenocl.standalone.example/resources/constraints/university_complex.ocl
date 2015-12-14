@@ -8,7 +8,6 @@
 -- Use this constraint file with model university_complex.uml
 -- 
 
-package tudresden::ocl20::pivot::examples::university_complex
 
 /*
  * The academic grade of a persons supervisor must be greater
@@ -16,8 +15,7 @@ package tudresden::ocl20::pivot::examples::university_complex
  *
  * Used patterns: BASIC TYPE, NAVIGATION, CLASS AND ATTRIBUTE
  */
-context Person
-inv tudOclInv1: self.supervisor.grade.value > self.grade.value
+context Person inv : self.supervisor.grade.value > self.grade.value
 
 
 /*
@@ -175,4 +173,3 @@ inv tudOclInv14_6: self.age.div(1000) < 1
 -- mod (basic type)
 inv tudOclInv14_7: self.age.mod(1000) = self.age
 
-endpackage

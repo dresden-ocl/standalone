@@ -57,6 +57,11 @@
 			</snapshots>
 			<url>${project.baseUri}repo</url>
 		</repository>
+
+		<repository>
+			<id>emftext</id>
+			<url>http://emftext.org/maven-repository/</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -128,7 +133,9 @@
 						<filter>
 							<artifact>*:*</artifact>
 							<excludes>
-								<exclude>MANIFEST.MF</exclude>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
 							</excludes>
 						</filter>
 					</filters>
@@ -142,6 +149,59 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.scala-lang</groupId> <artifactId>scala-library</artifactId> 
+			<version>2.11.7</version> </dependency> <dependency> <groupId>org.scala-lang</groupId> 
+			<artifactId>scala-compiler</artifactId> <version>2.11.7</version> </dependency> -->
+
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>stringtemplate</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr-runtime</artifactId>
+			<version>3.5.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.relaxng</groupId>
+			<artifactId>relaxngDatatype</artifactId>
+			<version>2011.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+
+		<!-- dresdenocl -->
+
+
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.attributegrammar.integration.kiama</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.standardlibrary.java</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.language.ocl</artifactId>
+			<version>${dresdenocl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.dresdenocl</groupId>
+			<artifactId>org.dresdenocl.modelbus</artifactId>
+			<version>${dresdenocl.version}</version>
 		</dependency>
 
 		<dependency>
@@ -305,13 +365,11 @@
 			<artifactId>org.dresdenocl.essentialocl.standardlibrary</artifactId>
 			<version>${dresdenocl.version}</version>
 		</dependency>
-		<!-- local dependencies -->
-		<dependency>
-			<groupId>org.eclipse.core</groupId>
-			<artifactId>runtime</artifactId>
-			<version>3.10.0.v20140318-2214</version>
-		</dependency>
 
+
+		<!-- local dependencies -->
+		<!-- <dependency> <groupId>org.eclipse.core</groupId> <artifactId>runtime</artifactId> 
+			<version>3.10.0.v20140318-2214</version> </dependency> -->
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>ecore</artifactId>
@@ -347,5 +405,18 @@
 			<artifactId>common</artifactId>
 			<version>2.10.1.v20140901-1043</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.emftext.commons</groupId>
+			<artifactId>org.emftext.commons.layout</artifactId>
+			<version>1.4.2-20130528.130632-1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.emftext.commons</groupId>
+			<artifactId>org.emftext.commons.antlr3_4_0</artifactId>
+			<version>3.4.0-20130528.130634-1</version>
+		</dependency>
+
 	</dependencies>
 </project>
