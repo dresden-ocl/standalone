@@ -1,4 +1,5 @@
-package tudresden::ocl20::pivot::examples::simple
+-- @model{../model/simple.uml}
+package org::dresdenocl::examples::simple
 
 -- The age of Person can not be negative.
 context Person

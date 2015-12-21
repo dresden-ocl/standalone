@@ -3,6 +3,10 @@ package org.dresdenocl.standalone.example;
 import java.io.File;
 import java.util.List;
 
+import org.dresdenocl.examples.pml.PmlPackage;
+import org.dresdenocl.examples.simple.Person;
+import org.dresdenocl.examples.simple.Professor;
+import org.dresdenocl.examples.simple.Student;
 import org.dresdenocl.interpreter.IInterpretationResult;
 import org.dresdenocl.metrics.OclMetrics;
 import org.dresdenocl.model.IModel;
@@ -13,32 +17,28 @@ import org.dresdenocl.standalone.facade.StandaloneFacade;
 import org.dresdenocl.tools.codegen.declarativ.IOcl2DeclSettings;
 import org.dresdenocl.tools.codegen.declarativ.Ocl2DeclCodeFactory;
 import org.dresdenocl.tools.codegen.declarativ.impl.Ocl2DeclSettings;
+import org.dresdenocl.tools.codegen.declarativ.ocl2sql.Ocl2SqlPlugin;
 import org.dresdenocl.tools.codegen.ocl2java.IOcl2JavaSettings;
 import org.dresdenocl.tools.codegen.ocl2java.Ocl2JavaFactory;
 import org.dresdenocl.tools.template.TemplatePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import tudresden.ocl20.pivot.examples.pml.PmlPackage;
-import tudresden.ocl20.pivot.examples.simple.Person;
-import tudresden.ocl20.pivot.examples.simple.Professor;
-import tudresden.ocl20.pivot.examples.simple.Student;
-
 public class StandaloneDresdenOCLExample {
 
-	final static File rlModel = new File("resources/model/royalsandloyals.uml");
+	final static File rlModel = new File("resources/model/royalandloyal.uml");
 	final static File rlInstance = new File(
-			"resources/modelinstance/tudresden/ocl20/pivot/examples/royalsandloyals/instance/ModelInstanceProviderClass.class");
-	final static File rlOclConstraints = new File("resources/constraints/rl_allConstraints.ocl");
+			"resources/modelinstance/org/dresdenocl/examples/royalandloyal/instance/ModelInstanceProviderClass.class");
+	final static File rlOclConstraints = new File("resources/constraints/allConstraints.ocl");
 
 	final static File pmlModel = new File("resources/model/pml.ecore");
 	final static File pmlInstance = new File("resources/modelinstance/goodModelInstance.pml");
 	final static File pmlOclConstraints = new File("resources/constraints/pml_wfrs.ocl");
 
 	final static File simpleModel = new File(
-			"resources/model/tudresden/ocl20/pivot/examples/simple/ModelProviderClass.class");
+			"resources/model/org/dresdenocl/examples/simple/ModelProviderClass.class");
 	final static File simpleInstance = new File(
-			"resources/modelinstance/tudresden/ocl20/pivot/examples/simple/instance/ModelInstanceProviderClass.class");
+			"resources/modelinstance/org/dresdenocl/examples/simple/instance/ModelInstanceProviderClass.class");
 	final static File simpleOclConstraints = new File("resources/constraints/simple_allConstraints.ocl");
 
 	final static File painModel = new File("resources/model/pain.008.001.01corrected.xsd");
@@ -52,15 +52,15 @@ public class StandaloneDresdenOCLExample {
 
 		StandaloneFacade.INSTANCE.initialize();
 
-		//royalsAndLoyals();
+		royalsAndLoyals();
 
-		//pml();
+		pml();
 
-		//simple();
+		simple();
 
 		pain();
 
-		//university();
+		university();
 
 	}
 
@@ -237,6 +237,7 @@ public class StandaloneDresdenOCLExample {
 		System.out.println();
 
 		try {
+			
 			IModel model = StandaloneFacade.INSTANCE.loadUMLModel(universityModel, getUMLResources());
 
 			List<Constraint> constraintList = StandaloneFacade.INSTANCE.parseOclConstraints(model,
@@ -245,7 +246,7 @@ public class StandaloneDresdenOCLExample {
 			IOcl2DeclSettings settings = Ocl2DeclCodeFactory.getInstance().createOcl2DeclCodeSettings();
 			settings.setSourceDirectory("src-gen/university/");
 			settings.setModus(Ocl2DeclSettings.MODUS_TYPED);
-			// settings.setSaveCode(true);
+			settings.setSaveCode(0);
 			settings.setTemplateGroup(TemplatePlugin.getTemplateGroupRegistry().getTemplateGroup("Standard(SQL)"));
 			StandaloneFacade.INSTANCE.generateSQLCode(constraintList, settings, model);
 

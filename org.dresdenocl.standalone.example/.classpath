@@ -2,18 +2,35 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/antlr-runtime-3.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/jobs-3.6.0-v20140424-0053.jar"/>
+	<classpathentry kind="lib" path="lib/kiama_2.9.0-1.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.commons.lang_2.3.0.v200803061910.jar"/>
+	<classpathentry kind="lib" path="lib/org.dresdenocl.examples.pain-3.4.1-20151210.224057-1.jar"/>
+	<classpathentry kind="lib" path="lib/org.dresdenocl.examples.pml-3.4.1-20151210.224129-1.jar"/>
+	<classpathentry kind="lib" path="lib/org.dresdenocl.examples.royalandloyal-3.4.1-20151210.224545-1.jar"/>
+	<classpathentry kind="lib" path="lib/org.dresdenocl.examples.simple-3.4.1-20151210.224200-1.jar"/>
+	<classpathentry kind="lib" path="lib/org.dresdenocl.examples.university-3.4.1-20151210.224234-1.jar"/>
 	<classpathentry kind="lib" path="lib/org.dresdenocl.standalone-3.4.1-SNAPSHOT-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.common_2.11.0.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore_2.11.1.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.11.1.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.mapping.ecore2xml_2.9.0.v20150806-0404.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.uml2_3.0.0.v201005031530.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.uml2_5.0.0.v20150906-1225.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.uml2.common_1.5.0.v201005031530.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.uml2.common_2.1.0.v20150906-1225.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.uml2.types_2.0.0.v20150906-1225.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.uml2.uml_3.1.0.v201006071150.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.uml2.uml_5.1.0.v20150906-1225.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.uml2.uml.resources_3.1.0.v201005031530.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.uml2.uml.resources_5.1.0.v20150906-1225.jar"/>
-	<classpathentry kind="lib" path="lib/jobs-3.6.0-v20140424-0053.jar"/>
-	<classpathentry kind="lib" path="lib/tudresden.ocl20.pivot.examples.pml_3.1.0.201101171055.jar"/>
-	<classpathentry kind="lib" path="lib/tudresden.ocl20.pivot.examples.simple_3.1.0.201101171055.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.xsd_2.6.0.v20100614-1136.jar"/>
+	<classpathentry kind="lib" path="lib/org.emftext.access_1.2.0.201009131109.jar"/>
+	<classpathentry kind="lib" path="lib/org.emftext.commons.antlr3_4_0-3.4.0-20130528.130634-1.jar"/>
+	<classpathentry kind="lib" path="lib/org.emftext.commons.layout-1.4.2-20130528.130632-1.jar"/>
+	<classpathentry kind="lib" path="lib/relaxngDatatype-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/scala-compiler.jar"/>
 	<classpathentry kind="lib" path="lib/scala-library.jar"/>
-	<classpathentry kind="lib" path="lib/kiama_2.9.0-1.1.0.jar"/>
-	<classpathentry kind="lib" path="lib/org.emftext.access_1.2.0.201009131109.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
