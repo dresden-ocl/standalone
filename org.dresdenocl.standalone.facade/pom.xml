@@ -451,12 +451,86 @@
 
 		<!-- local dependencies -->
 
-		<!-- <dependency> <groupId>org.eclipse</groupId> <artifactId>uml2</artifactId> 
-			<version>5.0.0.v20140602-0749</version> </dependency> <dependency> <groupId>org.eclipse.uml2</groupId> 
-			<artifactId>common</artifactId> <version>2.0.0.v20140602-0749</version> </dependency> 
-			<dependency> <groupId>org.eclipse.uml2</groupId> <artifactId>uml</artifactId> 
-			<version>5.0.0.v20140602-0749</version> </dependency> -->
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>uml2</artifactId>
+			<version>5.0.0.v20140602-0749</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/org.eclipse.uml2_5.0.0.v20150906-1225.jar</systemPath>
+		</dependency>
 
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>uml</artifactId>
+			<version>5.0.0.v20140602-0749</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/org.eclipse.uml2.uml_5.1.0.v20150906-1225.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>common</artifactId>
+			<version>2.0.0.v20140602-0749</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/org.eclipse.uml2.common_2.1.0.v20150906-1225.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>types</artifactId>
+			<version>2.0.0.v20150906-1225</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/org.eclipse.uml2.types_2.0.0.v20150906-1225.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.uml2</groupId>
+			<artifactId>resources</artifactId>
+			<version>5.1.0.v20150906-1225</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/org.eclipse.uml2.uml.resources_5.1.0.v20150906-1225.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org.emftext</groupId>
+			<artifactId>access</artifactId>
+			<version>1.2.0.201009131109</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/org.emftext.access_1.2.0.201009131109.jar</systemPath>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>kiama</artifactId>
+			<version>2.9.0-1.1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/kiama_2.9.0-1.1.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>jobs</artifactId>
+			<version>3.6.0-v20140424-0053</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/jobs-3.6.0-v20140424-0053.jar</systemPath>
+		</dependency>
+
+
+		<dependency>
+			<groupId>scala</groupId>
+			<artifactId>compiler</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/scala-compiler.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>scala</groupId>
+			<artifactId>library</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/scala-library.jar</systemPath>
+		</dependency>
 
 	</dependencies>
 </project>
