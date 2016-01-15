@@ -38,6 +38,4 @@ install: /bin/true
 
 script:
   - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then mvn install package -DskipTests -B -V ; fi
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then
-    mvn deploy -DskipTests -DuniqueVersion=false -Dpackaging=jar -DgeneratePom=false; fi
+
