@@ -16,23 +16,7 @@
 	<modules>
 		<module>org.dresdenocl.standalone.facade</module>
 	</modules>
-	<distributionManagement>
-		<repository>
-			<id>ftp-repository</id>
-			<url>ftp://dresdenocl\dresdenocl:${env.FTP_PASS}@waws-prod-db3-033.ftp.azurewebsites.windows.net/site/wwwroot</url>
-			<uniqueVersion>false</uniqueVersion>
-		</repository>
-	</distributionManagement>
 
-	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-6</version>
-			</extension>
-		</extensions>
-	</build>
 	<repositories>
 		<repository>
 			<id>Codehaus Mojo</id>
